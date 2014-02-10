@@ -1,0 +1,6 @@
+Blakecoin Cloning Instructions
+
+bitcoinrpc.cpp 
+	Line 46
+		Main port, Testnet
+
