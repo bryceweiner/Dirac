@@ -1,4 +1,5 @@
 #include "bignum.h"
+#include "genesis.h"
 
 const char* pszCoinName = "Dirac";
 const char* pszCoinLowercase = "dirac";
@@ -22,10 +23,6 @@ static const int MINTXFEE = 10000; // Override with -mintxfee
 /** Fees smaller than this (in satoshi) are considered zero fee (for relaying) */
 static const int MINRELAYTXFEE = 10000;
 
-static const unsigned int nMainNonce = 120396719;
-
-const char* pszTimestamp = "Not with a bang, but a whimper.";
-
 // Don't mess with this if you don't know what it is.  If you do, it's nice to have it here.
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
 
@@ -35,13 +32,6 @@ static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
 // http://www.epochconverter.com/
 // Main net
 unsigned char pchMessageStartMainNet[4] = { 0xf9, 0xbe, 0xb4, 0xd2 };
-uint256 hashGenesisBlockMainNet("0x");
-uint256 hashMerkleRootMainNet("0x");
-static const unsigned int timeGenesisBlockMainNet = 1381036817;
 //Test net
-static const unsigned int nTestNonce = 120396719;
-uint256 hashGenesisBlockTestNet("0x");
-uint256 hashMerkleRootTestNet("0x");
 unsigned char pchMessageStartTestNet[4] = { 0x9f, 0xeb, 0x4b, 0x2d };
-static const unsigned int timeTestNetBlock = 1381036817;
 

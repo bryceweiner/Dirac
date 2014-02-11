@@ -9,7 +9,7 @@
 
 #include "main.h"
 #include "uint256.h"
-
+#include "genesis.h"
 namespace Checkpoints
 {
     typedef std::map<int, uint256> MapCheckpoints;
