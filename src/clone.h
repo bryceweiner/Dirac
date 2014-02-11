@@ -7,6 +7,8 @@ static const unsigned int TEST_RPCPORT = 22022;
 static const unsigned int TEST_DEFAULTPORT = 20202;
 
 /** No amount larger than this (in satoshi) is valid */
+static const int64 COIN = 100000000;
+static const int64 CENT = 1000000;
 static const int64 MAX_MONEY = 7000000000 * COIN; // 7 billion
 
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
@@ -20,17 +22,19 @@ static const unsigned int nMainNonce = 120396719;
 
 const char* pszTimestamp = "Not with a bang, but a whimper.";
 
+// Don't mess with this if you don't know what it is.  If you do, it's nice to have it here.
+static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
+
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
+// http://www.epochconverter.com/
+// Main net
 unsigned char pchMessageStart[4] = { 0xf9, 0xbe, 0xb4, 0xd2 };
 uint256 hashGenesisBlock("0x");
 uint256 hashMerkleRoot("0x");
-// http://www.epochconverter.com/
 static const unsigned int timeGenesisBlock = 1381036817;
-static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
-
-
+//Test net
 static const unsigned int nTestNonce = 120396719;
 uint256 hashGenesisBlockTestNet("0x");
 uint256 hashMerkleRootTestNet("0x");
