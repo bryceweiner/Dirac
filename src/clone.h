@@ -1,3 +1,5 @@
+#include "bignum.h"
+
 // Change these
 static const unsigned int MAIN_RPCPORT = 11011;
 static const unsigned int MAIN_DEFAULTPORT = 10101;
@@ -9,11 +11,10 @@ static const int64 MAX_MONEY = 7000000000 * COIN; // 7 billion
 
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
 static const int COINBASE_MATURITY = 120;
-
 /** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
-int64 CTransaction::nMinTxFee = 10000;  // Override with -mintxfee
+static const int MINTXFEE = 10000; // Override with -mintxfee
 /** Fees smaller than this (in satoshi) are considered zero fee (for relaying) */
-int64 CTransaction::nMinRelayTxFee = 10000;
+static const int MINRELAYTXFEE = 10000;
 
 static const unsigned int nMainNonce = 120396719;
 

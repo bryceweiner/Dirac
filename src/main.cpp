@@ -48,6 +48,8 @@ bool fReindex = false;
 bool fBenchmark = false;
 bool fTxIndex = false;
 unsigned int nCoinCacheSize = 5000;
+int64 CTransaction::nMinTxFee = MINTXFEE;  
+int64 CTransaction::nMinRelayTxFee = MINRELAYTXFEE;
 
 
 CMedianFilter<int> cPeerBlockCounts(8, 0); // Amount of blocks that other nodes claim to have
@@ -2884,7 +2886,7 @@ bool InitBlockIndex() {
 
         if (fTestNet)
         {
-            block.nTime    = 1381033532;
+            block.nTime    = timeTestNetBlock;
             block.nNonce   = nTestNonce;
         }
 
