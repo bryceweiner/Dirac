@@ -6,8 +6,6 @@
 #define BITCOIN_UTIL_H
 
 #include "uint256.h"
-#include "clone.h"
-
 #include <stdarg.h>
 
 #ifndef WIN32
@@ -34,6 +32,10 @@ typedef int pid_t; /* define for Windows compatibility */
 
 typedef long long  int64;
 typedef unsigned long long  uint64;
+
+static const int64 CENT = 1000000;
+static const int64 COIN = 100000000;
+
 
 #define loop                for (;;)
 #define BEGIN(a)            ((char*)&(a))

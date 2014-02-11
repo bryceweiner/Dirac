@@ -7,9 +7,8 @@ static const unsigned int TEST_RPCPORT = 22022;
 static const unsigned int TEST_DEFAULTPORT = 20202;
 
 /** No amount larger than this (in satoshi) is valid */
-static const int64 COIN = 100000000;
-static const int64 CENT = 1000000;
 static const int64 MAX_MONEY = 7000000000 * COIN; // 7 billion
+// Now go to UTIL.H, line 36
 
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
 static const int COINBASE_MATURITY = 120;
