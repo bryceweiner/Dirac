@@ -9,7 +9,6 @@
 
 #include "main.h"
 #include "uint256.h"
-#include "clone.h"
 
 namespace Checkpoints
 {
