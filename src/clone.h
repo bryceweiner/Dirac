@@ -32,7 +32,7 @@ static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
 
 
 static const unsigned int nTestNonce = 120396719;
-unit256 hashGenesisBlockTestNet("0x");
+uint256 hashGenesisBlockTestNet("0x");
 uint256 hashMerkleRootTestNet("0x");
 unsigned char pchMessageStartTestNet[4] = { 0x9f, 0xeb, 0x4b, 0x2d };
 static const unsigned int timeTestNetBlock = 1381036817;
