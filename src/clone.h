@@ -1,5 +1,10 @@
 #include "bignum.h"
 
+const char* pszCoinName = "Dirac";
+const char* pszCoinLowercase = "dirac";
+const char* pszCoinUppercase = "DIRAC";
+const char* pszCoinAbbr = "DRC";
+
 // Change these
 static const unsigned int MAIN_RPCPORT = 11011;
 static const unsigned int MAIN_DEFAULTPORT = 10101;
@@ -29,10 +34,10 @@ static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
 // a large 4-byte int at any alignment.
 // http://www.epochconverter.com/
 // Main net
-unsigned char pchMessageStart[4] = { 0xf9, 0xbe, 0xb4, 0xd2 };
-uint256 hashGenesisBlock("0x");
-uint256 hashMerkleRoot("0x");
-static const unsigned int timeGenesisBlock = 1381036817;
+unsigned char pchMessageStartMainNet[4] = { 0xf9, 0xbe, 0xb4, 0xd2 };
+uint256 hashGenesisBlockMainNet("0x");
+uint256 hashMerkleRootMainNet("0x");
+static const unsigned int timeGenesisBlockMainNet = 1381036817;
 //Test net
 static const unsigned int nTestNonce = 120396719;
 uint256 hashGenesisBlockTestNet("0x");

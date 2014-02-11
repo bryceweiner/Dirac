@@ -3067,12 +3067,10 @@ bool LoadExternalBlockFile(FILE* fileIn, CDiskBlockPos *dbp)
 }
 
 
-
-
-
-
-
-
+// The message start string is designed to be unlikely to occur in normal data.
+// The characters are rarely used upper ASCII, not valid as UTF-8, and produce
+// a large 4-byte int at any alignment.
+unsigned char pchMessageStart[4] = pchMessageStartMainNet;
 
 
 //////////////////////////////////////////////////////////////////////////////
