@@ -17,6 +17,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include "clone.h"
+#include "genesis.h"
 
 using namespace std;
 using namespace boost;

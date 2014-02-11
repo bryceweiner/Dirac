@@ -1,5 +1,4 @@
 #include "bignum.h"
-#include "genesis.h"
 
 const char* pszCoinName = "Dirac";
 const char* pszCoinLowercase = "dirac";
