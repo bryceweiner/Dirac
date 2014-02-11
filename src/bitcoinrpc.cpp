@@ -10,6 +10,7 @@
 #include "base58.h"
 #include "bitcoinrpc.h"
 #include "db.h"
+#include "clone.h"
 
 #include <boost/asio.hpp>
 #include <boost/asio/ip/v6_only.hpp>
