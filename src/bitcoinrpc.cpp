@@ -10,7 +10,6 @@
 #include "base58.h"
 #include "bitcoinrpc.h"
 #include "db.h"
-#include "clone.h"
 
 #include <boost/asio.hpp>
 #include <boost/asio/ip/v6_only.hpp>
@@ -44,7 +43,7 @@ static boost::thread_group* rpc_worker_group = NULL;
 
 static inline unsigned short GetDefaultRPCPort()
 {
-    return GetBoolArg("-testnet", false) ? MAIN_RPCPORT : TEST_RPCPORT;
+    return GetBoolArg("-testnet", false) ? TEST_RPCPORT : MAIN_RPCPORT;
 }
 
 Object JSONRPCError(int code, const string& message)

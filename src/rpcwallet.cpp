@@ -10,7 +10,6 @@
 #include "bitcoinrpc.h"
 #include "init.h"
 #include "base58.h"
-#include "clone.h"
 
 using namespace std;
 using namespace boost;

@@ -16,7 +16,6 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-#include "clone.h"
 #include "genesis.h"
 
 using namespace std;
@@ -41,6 +40,7 @@ uint256 nBestChainWork = 0;
 uint256 nBestInvalidWork = 0;
 uint256 hashBestChain = 0;
 CBlockIndex* pindexBest = NULL;
+uint256 hashGenesisBlock("");
 set<CBlockIndex*, CBlockIndexWorkComparator> setBlockIndexValid; // may contain all CBlockIndex*'s that have validness >=BLOCK_VALID_TRANSACTIONS, and must contain those who aren't failed
 int64 nTimeBestReceived = 0;
 int nScriptCheckThreads = 0;
@@ -1077,9 +1077,7 @@ uint256 static GetOrphanRoot(const CBlockHeader* pblock)
     return pblock->GetHash();
 }
 
-static const int64 nGenesisBlockRewardCoin = 5 * COIN;
-static const int64 nBlockRewardStartCoin = 25 * COIN;
-
+// Deprecated by KGW
 static const int64 nTargetTimespan = 60 * 60; // 60 minutes
 static const int64 nTargetSpacing = 3 * 60; // 3 minutes
 static const int64 nInterval = nTargetTimespan / nTargetSpacing; // 20 blocks
@@ -1238,7 +1236,7 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
                 if (PastRateActualSeconds != 0 && PastRateTargetSeconds != 0) {
                 PastRateAdjustmentRatio = double(PastRateTargetSeconds) / double(PastRateActualSeconds);
                 }
-                EventHorizonDeviation = 1 + (0.7084 * pow((double(PastBlocksMass)/double(28.2)), -1.228));
+                EventHorizonDeviation = 1 + (0.7084 * pow((double(PastBlocksMass)/double(gravitationalPull)), -1.228));
                 EventHorizonDeviationFast = EventHorizonDeviation;
                 EventHorizonDeviationSlow = 1 / EventHorizonDeviation;
                 
@@ -1267,10 +1265,10 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
 
 unsigned int static GetNextWorkRequired_V2(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
-        static const int64 BlocksTargetSpacing = 7 * 60; // 30 seconds
-        unsigned int TimeDaySeconds = 60 * 60 * 24;
-        int64 PastSecondsMin = TimeDaySeconds * 0.23;
-        int64 PastSecondsMax = TimeDaySeconds * 1;
+        static const int64 BlocksTargetSpacing = transationTimeTarget; // 30 seconds
+        unsigned int TimeDaySeconds = secondsInADay;
+        int64 PastSecondsMin = TimeDaySeconds * minimumGravitationalLensing;
+        int64 PastSecondsMax = TimeDaySeconds * maximumGravitationalLensing;
         uint64 PastBlocksMin = PastSecondsMin / BlocksTargetSpacing;
         uint64 PastBlocksMax = PastSecondsMax / BlocksTargetSpacing;
         
@@ -2840,6 +2838,8 @@ bool LoadBlockIndex()
         pchMessageStart[2] = pchMessageStartTestNet[2];
         pchMessageStart[3] = pchMessageStartTestNet[3];
         hashGenesisBlock = hashGenesisBlockTestNet;
+    } else {
+        hashGenesisBlock = hashGenesisBlockMainNet;
     }
 
     //
@@ -2881,13 +2881,13 @@ bool InitBlockIndex() {
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 112;
-        block.nTime    = timeGenesisBlock;
+        block.nTime    = timeGenesisBlockMainNet;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
         block.nNonce   = nMainNonce;
 
         if (fTestNet)
         {
-            block.nTime    = timeTestNetBlock;
+            block.nTime    = timeGenesisBlockTestNet;
             block.nNonce   = nTestNonce;
         }
 
@@ -2902,7 +2902,7 @@ bool InitBlockIndex() {
         printf("%s\n", hashGenesisBlock.ToString().c_str());
         printf("%s\n", block.hashMerkleRoot.ToString().c_str());
         block.print();
-        assert(block.hashMerkleRoot == hashMerkleRoot);
+        assert(block.hashMerkleRoot == hashMerkleRootMainNet);
         assert(hash == hashGenesisBlock);
 
         // Start new block file
@@ -3072,7 +3072,8 @@ bool LoadExternalBlockFile(FILE* fileIn, CDiskBlockPos *dbp)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = pchMessageStartMainNet;
+unsigned char pchMessageStart[4] = { pchMessageStartMainNet[0], pchMessageStartMainNet[1],
+                                     pchMessageStartMainNet[2], pchMessageStartMainNet[3] };
 
 
 //////////////////////////////////////////////////////////////////////////////
