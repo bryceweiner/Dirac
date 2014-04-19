@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2013 The Blakecoin developers
+// Copyright (c) 2013 The Dirac developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,6 +17,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include "genesis.h"
+#include "auxpow.h"
 
 using namespace std;
 using namespace boost;
@@ -64,7 +65,7 @@ map<uint256, set<uint256> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "Blakecoin Signed Message:\n";
+const string strMessageMagic = "Dirac Signed Message:\n";
 
 double dHashesPerSec = 0.0;
 int64 nHPSTimerStart = 0;
@@ -1069,6 +1070,15 @@ bool CBlock::ReadFromDisk(const CBlockIndex* pindex)
     return true;
 }
 
+void CBlockHeader::SetAuxPow(CAuxPow* pow)
+{
+    if (pow != NULL)
+        nVersion |=  BLOCK_VERSION_AUXPOW;
+    else
+        nVersion &=  ~BLOCK_VERSION_AUXPOW;
+    auxpow.reset(pow);
+}
+
 uint256 static GetOrphanRoot(const CBlockHeader* pblock)
 {
     // Work back to the first block in the orphan chain
@@ -1292,6 +1302,31 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 {
+    // Prevent same work from being submitted twice:
+    // - this block must have our chain ID
+    // - parent block must not have the same chain ID (see CAuxPow::Check)
+    // - index of this chain in chain merkle tree must be pre-determined (see CAuxPow::Check)
+    if (!fTestNet && nHeight != INT_MAX && GetChainID() != GetOurChainID())
+        return error("CheckProofOfWork() : block does not have our chain ID");
+
+    if (auxpow.get() != NULL)
+    {
+        if (!auxpow->Check(GetHash(), GetChainID()))
+            return error("CheckProofOfWork() : AUX POW is not valid");
+        // Check proof of work matches claimed amount
+        if (!::CheckProofOfWork(auxpow->GetParentBlockHash(), nBits))
+            return error("CheckProofOfWork() : AUX proof of work failed");
+    }
+    else
+    {
+        // Check proof of work matches claimed amount
+        if (!::CheckProofOfWork(GetHash(), nBits))
+            return error("CheckProofOfWork() : proof of work failed");
+    }
+
+/*
+
+
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
 
@@ -1302,7 +1337,7 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits)
     // Check proof of work matches claimed amount
     if (hash > bnTarget.getuint256())
         return error("CheckProofOfWork() : hash doesn't match nBits");
-
+*/
     return true;
 }
 
@@ -2073,8 +2108,10 @@ bool CBlock::AddToBlockIndex(CValidationState &state, const CDiskBlockPos &pos)
     pindexNew->nStatus = BLOCK_VALID_TRANSACTIONS | BLOCK_HAVE_DATA;
     setBlockIndexValid.insert(pindexNew);
 
-    if (!pblocktree->WriteBlockIndex(CDiskBlockIndex(pindexNew)))
+    /* write both the immutable data (CDiskBlockIndex) and the mutable data (BlockIndex) */
+    if (!pblocktree->WriteDiskBlockIndex(CDiskBlockIndex(pindexNew, this->auxpow)) || !pblocktree->WriteBlockIndex(*pindexNew))
         return state.Abort(_("Failed to write block index"));
+
 
     // New best?
     if (!ConnectBestBlock(state))
@@ -4622,20 +4659,41 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     uint256 hash = pblock->GetHash();
     uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
 
-    if (hash > hashTarget)
-        return false;
+    CAuxPow *auxpow = pblock->auxpow.get();
 
-    //// debug print
-    printf("BlakecoinMiner:\n");
-    printf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
-    pblock->print();
-    printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
+    if (auxpow != NULL)
+    {
+        if (!auxpow->Check(hash, pblock->GetChainID()))
+            return error("AUX POW is not valid");
+
+        if (auxpow->GetParentBlockHash() > hashTarget)
+            return error("AUX POW parent hash %s is not under target %s", auxpow->GetParentBlockHash().GetHex().c_str(), hashTarget.GetHex().c_str());
+
+        //// debug print
+        printf("DiracMiner:\n");
+        printf("AUX proof-of-work found  \n     our hash: %s   \n  parent hash: %s  \n       target: %s\n",
+                hash.GetHex().c_str(),
+                auxpow->GetParentBlockHash().GetHex().c_str(),
+                hashTarget.GetHex().c_str());
+    }
+    else
+    {
+
+        if (hash > hashTarget)
+            return false;
+    
+        //// debug print
+        printf("DiracMiner:\n");
+        printf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
+        pblock->print();
+        printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
+    }
 
     // Found a solution
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != hashBestChain)
-            return error("BlakecoinMiner : generated block is stale");
+            return error("DiracMiner : generated block is stale");
 
         // Remove key from key pool
         reservekey.KeepKey();
@@ -4649,7 +4707,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         // Process this block the same as if we had received it from another node
         CValidationState state;
         if (!ProcessBlock(state, NULL, pblock))
-            return error("BlakecoinMiner : ProcessBlock, block not accepted");
+            return error("DiracMiner : ProcessBlock, block not accepted");
     }
 
     return true;
@@ -4657,9 +4715,9 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
 
 void static BitcoinMiner(CWallet *pwallet)
 {
-    printf("BlakecoinMiner started\n");
+    printf("DiracMiner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("blakecoin-miner");
+    RenameThread("dirac-miner");
 
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
@@ -4681,7 +4739,7 @@ void static BitcoinMiner(CWallet *pwallet)
         CBlock *pblock = &pblocktemplate->block;
         IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-        printf("Running BlakecoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
+        printf("Running DiracMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
                ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
         //
@@ -4784,7 +4842,7 @@ void static BitcoinMiner(CWallet *pwallet)
     } }
     catch (boost::thread_interrupted)
     {
-        printf("BlakecoinMiner terminated\n");
+        printf("DiracMiner terminated\n");
         throw;
     }
 }

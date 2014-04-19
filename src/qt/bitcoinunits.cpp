@@ -45,9 +45,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BLC: return QString("Blakecoins");
-    case mBLC: return QString("Milli-Blakecoins (1 / 1,000)");
-    case uBLC: return QString("Micro-Blakecoins (1 / 1,000,000)");
+    case BLC: return QString("Diracs");
+    case mBLC: return QString("Milli-Diracs (1 / 1,000)");
+    case uBLC: return QString("Micro-Diracs (1 / 1,000,000)");
     default: return QString("???");
     }
 }

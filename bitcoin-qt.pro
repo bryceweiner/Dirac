@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = blakecoin-qt
-macx:TARGET = "Blakecoin-Qt"
+macx:TARGET = "Dirac-Qt"
 VERSION = 0.8.9
 INCLUDEPATH += src src/json src/qt
 QT += network
@@ -174,6 +174,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/bloom.h \
     src/mruset.h \
     src/checkqueue.h \
+    src/auxpow.h \
     src/json/json_spirit_writer_template.h \
     src/json/json_spirit_writer.h \
     src/json/json_spirit_value.h \
@@ -252,6 +253,7 @@ SOURCES += src/qt/bitcoin.cpp \
     src/checkpoints.cpp \
     src/addrman.cpp \
     src/db.cpp \
+    src/auxpow.cpp \
     src/walletdb.cpp \
     src/qt/clientmodel.cpp \
     src/qt/guiutil.cpp \

@@ -8,7 +8,7 @@ namespace Ui {
 }
 class ClientModel;
 
-/** Local Blakecoin RPC console. */
+/** Local Dirac RPC console. */
 class RPCConsole: public QDialog
 {
     Q_OBJECT

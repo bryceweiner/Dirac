@@ -6,6 +6,7 @@
 #include "txdb.h"
 #include "main.h"
 #include "hash.h"
+#include "auxpow.h"
 
 using namespace std;
 

@@ -16,7 +16,7 @@ class QUrl;
 class QAbstractItemView;
 QT_END_NAMESPACE
 
-/** Utility functions used by the Blakecoin Qt UI.
+/** Utility functions used by the Dirac Qt UI.
  */
 namespace GUIUtil
 {
@@ -96,7 +96,7 @@ namespace GUIUtil
     bool GetStartOnSystemStartup();
     bool SetStartOnSystemStartup(bool fAutoStart);
 
-    /** Help message for Blakecoin-Qt, shown with --help. */
+    /** Help message for Dirac-Qt, shown with --help. */
     class HelpMessageBox : public QMessageBox
     {
         Q_OBJECT

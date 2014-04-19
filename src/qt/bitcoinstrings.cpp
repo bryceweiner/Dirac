@@ -17,7 +17,7 @@ QT_TRANSLATE_NOOP("blakecoin-core", ""
 "If the file does not exist, create it with owner-readable-only file "
 "permissions.\n"
 "It is also recommended to set alertnotify so you are notified of problems;\n"
-"for example: alertnotify=echo %%s | mail -s \"Blakecoin Alert\" admin@foo.com\n"),
+"for example: alertnotify=echo %%s | mail -s \"Dirac Alert\" admin@foo.com\n"),
 QT_TRANSLATE_NOOP("blakecoin-core", ""
 "Acceptable ciphers (default: TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!AH:!3DES:"
 "@STRENGTH)"),
@@ -30,7 +30,7 @@ QT_TRANSLATE_NOOP("blakecoin-core", ""
 "Bind to given address and always listen on it. Use [host]:port notation for "
 "IPv6"),
 QT_TRANSLATE_NOOP("blakecoin-core", ""
-"Cannot obtain a lock on data directory %s. Blakecoin is probably already "
+"Cannot obtain a lock on data directory %s. Dirac is probably already "
 "running."),
 QT_TRANSLATE_NOOP("blakecoin-core", ""
 "Error: The transaction was rejected! This might happen if some of the coins "
@@ -63,7 +63,7 @@ QT_TRANSLATE_NOOP("blakecoin-core", ""
 "This is a pre-release test build - use at your own risk - do not use for "
 "mining or merchant applications"),
 QT_TRANSLATE_NOOP("blakecoin-core", ""
-"Unable to bind to %s on this computer. Blakecoin is probably already running."),
+"Unable to bind to %s on this computer. Dirac is probably already running."),
 QT_TRANSLATE_NOOP("blakecoin-core", ""
 "Warning: -paytxfee is set very high! This is the transaction fee you will "
 "pay if you send a transaction."),
@@ -72,7 +72,7 @@ QT_TRANSLATE_NOOP("blakecoin-core", ""
 "or other nodes may need to upgrade."),
 QT_TRANSLATE_NOOP("blakecoin-core", ""
 "Warning: Please check that your computer's date and time are correct! If "
-"your clock is wrong Blakecoin will not work properly."),
+"your clock is wrong Dirac will not work properly."),
 QT_TRANSLATE_NOOP("blakecoin-core", ""
 "Warning: error reading wallet.dat! All keys read correctly, but transaction "
 "data or address book entries might be missing or incorrect."),
@@ -91,7 +91,7 @@ QT_TRANSLATE_NOOP("blakecoin-core", "Add a node to connect to and attempt to kee
 QT_TRANSLATE_NOOP("blakecoin-core", "Allow DNS lookups for -addnode, -seednode and -connect"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Allow JSON-RPC connections from specified IP address"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Attempt to recover private keys from a corrupt wallet.dat"),
-QT_TRANSLATE_NOOP("blakecoin-core", "Blakecoin version"),
+QT_TRANSLATE_NOOP("blakecoin-core", "Dirac version"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Block creation options:"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Cannot downgrade wallet"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Cannot resolve -bind address: '%s'"),
@@ -109,7 +109,7 @@ QT_TRANSLATE_NOOP("blakecoin-core", "Error initializing wallet database environm
 QT_TRANSLATE_NOOP("blakecoin-core", "Error loading block database"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Error loading wallet.dat"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Error loading wallet.dat: Wallet corrupted"),
-QT_TRANSLATE_NOOP("blakecoin-core", "Error loading wallet.dat: Wallet requires newer version of Blakecoin"),
+QT_TRANSLATE_NOOP("blakecoin-core", "Error loading wallet.dat: Wallet requires newer version of Dirac"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Error opening block database"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Error"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Error: Disk space is low!"),
@@ -202,7 +202,7 @@ QT_TRANSLATE_NOOP("blakecoin-core", "Use the test network"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Username for JSON-RPC connections"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Verifying blocks..."),
 QT_TRANSLATE_NOOP("blakecoin-core", "Verifying wallet..."),
-QT_TRANSLATE_NOOP("blakecoin-core", "Wallet needed to be rewritten: restart Blakecoin to complete"),
+QT_TRANSLATE_NOOP("blakecoin-core", "Wallet needed to be rewritten: restart Dirac to complete"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Warning"),
 QT_TRANSLATE_NOOP("blakecoin-core", "Warning: This version is obsolete, upgrade required!"),
 QT_TRANSLATE_NOOP("blakecoin-core", "You need to rebuild the databases using -reindex to change -txindex"),

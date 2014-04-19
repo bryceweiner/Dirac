@@ -1,6 +1,6 @@
 Forked from Bitcoin reference wallet 0.8.5
 
-Blakecoin Wallet
+Dirac Wallet
 
 http://www.blakecoin.org
 
@@ -11,10 +11,10 @@ The algorithm was written as a candidate for sha3, Based on round one candidate 
 Tweaks Removed some of the double hashing from the wallet as it is wasteful on compute, No changes to the ecdsa public/private function as that has proven to be secure so far on bitcoin.
 
 
-What is Blakecoin?
+What is Dirac?
 
-Blakecoin is an experimental new digital currency that enables instant payments to
-anyone, anywhere in the world. Blakecoin uses peer-to-peer technology to operate
+Dirac is an experimental new digital currency that enables instant payments to
+anyone, anywhere in the world. Dirac uses peer-to-peer technology to operate
 with no central authority: managing transactions and issuing money are carried
 out collectively by the network.
 
@@ -25,7 +25,7 @@ git-core build-essential libssl-dev libboost-all-dev libdb5.1-dev libdb5.1++-dev
 
 License
 
-Blakecoin is released under the terms of the MIT license. See `COPYING` for more
+Dirac is released under the terms of the MIT license. See `COPYING` for more
 information or see http://opensource.org/licenses/MIT.
 
 

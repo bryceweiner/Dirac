@@ -33,7 +33,7 @@ class QAction;
 QT_END_NAMESPACE
 
 /**
-  Blakecoin GUI main class. This class represents the main window of the Blakecoin UI. It communicates with both the client and
+  Dirac GUI main class. This class represents the main window of the Dirac UI. It communicates with both the client and
   wallet models to give the user an up-to-date view of the current core state.
 */
 class BitcoinGUI : public QMainWindow

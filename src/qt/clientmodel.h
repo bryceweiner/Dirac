@@ -20,7 +20,7 @@ enum BlockSource {
     BLOCK_SOURCE_NETWORK
 };
 
-/** Model for Blakecoin network client. */
+/** Model for Dirac network client. */
 class ClientModel : public QObject
 {
     Q_OBJECT

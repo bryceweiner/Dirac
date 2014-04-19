@@ -74,6 +74,7 @@ CFLAGS += -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter \
 OBJS= \
     leveldb/libleveldb.a \
     obj/alert.o \
+    obj/auxpow.o \
     obj/version.o \
     obj/checkpoints.o \
     obj/netbase.o \

@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2013 The Blakecoin developers
+// Copyright (c) 2013 The Dirac developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1031,13 +1031,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Blakecoin
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Blakecoin
-    // Mac: ~/Library/Application Support/Blakecoin
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Dirac
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Dirac
+    // Mac: ~/Library/Application Support/Dirac
     // Unix: ~/.blakecoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Blakecoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Dirac";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1049,7 +1049,7 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "Blakecoin";
+    return pathRet / "Dirac";
 #else
     // Unix
     return pathRet / ".blakecoin";
@@ -1356,7 +1356,7 @@ void AddTimeData(const CNetAddr& ip, int64 nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong Blakecoin will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong Dirac will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
                     uiInterface.ThreadSafeMessageBox(strMessage, "", CClientUIInterface::MSG_WARNING);
