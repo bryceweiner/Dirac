@@ -4,13 +4,13 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About Dirac</source>
-        <translation>Despre Dirac</translation>
+        <source>About Blakecoin</source>
+        <translation>Despre Blakecoin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;Dirac&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;Dirac&lt;/b&gt; versiunea</translation>
+        <source>&lt;b&gt;Blakecoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;Blakecoin&lt;/b&gt; versiunea</translation>
     </message>
     <message>
         <location line="+57"/>
@@ -29,7 +29,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+0"/>
-        <source>The Dirac developers</source>
+        <source>The Blakecoin developers</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -62,8 +62,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="+63"/>
-        <source>These are your Dirac addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Acestea sunt adresele dumneavoastră Dirac pentru a primi plăţi. Dacă doriţi, puteți da o adresa diferită fiecărui expeditor, pentru a putea ţine evidenţa plăţilor.</translation>
+        <source>These are your Blakecoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Acestea sunt adresele dumneavoastră Blakecoin pentru a primi plăţi. Dacă doriţi, puteți da o adresa diferită fiecărui expeditor, pentru a putea ţine evidenţa plăţilor.</translation>
     </message>
     <message>
         <location filename="../forms/addressbookpage.ui" line="+14"/>
@@ -77,7 +77,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a Dirac address</source>
+        <source>Sign a message to prove you own a Blakecoin address</source>
         <translation>Semneaza mesajul pentru a dovedi ca detii aceasta adresa Bitocin</translation>
     </message>
     <message>
@@ -102,7 +102,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-44"/>
-        <source>Verify a message to ensure it was signed with a specified Dirac address</source>
+        <source>Verify a message to ensure it was signed with a specified Blakecoin address</source>
         <translation>Verifica mesajul pentru a te asigura ca a fost insemnat cu o adresa bitcoin specifica</translation>
     </message>
     <message>
@@ -117,7 +117,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="-5"/>
-        <source>These are your Dirac addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <source>These are your Blakecoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -270,8 +270,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-56"/>
-        <source>Dirac will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
-        <translation>Dirac se va închide acum pentru a termina procesul de criptare. Amintiți-vă că criptarea portofelului dumneavoastră nu poate proteja în totalitate bitcoins dvs. de a fi furate de intentii rele.</translation>
+        <source>Blakecoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
+        <translation>Blakecoin se va închide acum pentru a termina procesul de criptare. Amintiți-vă că criptarea portofelului dumneavoastră nu poate proteja în totalitate bitcoins dvs. de a fi furate de intentii rele.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -369,8 +369,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about Dirac</source>
-        <translation>Informaţii despre Dirac</translation>
+        <source>Show information about Blakecoin</source>
+        <translation>Informaţii despre Blakecoin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -414,13 +414,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-347"/>
-        <source>Send coins to a Dirac address</source>
-        <translation>&amp;Trimiteţi Dirac către o anumită adresă</translation>
+        <source>Send coins to a Blakecoin address</source>
+        <translation>&amp;Trimiteţi Blakecoin către o anumită adresă</translation>
     </message>
     <message>
         <location line="+49"/>
-        <source>Modify configuration options for Dirac</source>
-        <translation>Modifică setările pentru Dirac</translation>
+        <source>Modify configuration options for Blakecoin</source>
+        <translation>Modifică setările pentru Blakecoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -450,8 +450,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-165"/>
         <location line="+530"/>
-        <source>Dirac</source>
-        <translation>Dirac</translation>
+        <source>Blakecoin</source>
+        <translation>Blakecoin</translation>
     </message>
     <message>
         <location line="-530"/>
@@ -475,8 +475,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+22"/>
-        <source>&amp;About Dirac</source>
-        <translation>&amp;Despre Dirac</translation>
+        <source>&amp;About Blakecoin</source>
+        <translation>&amp;Despre Blakecoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -495,12 +495,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign messages with your Dirac addresses to prove you own them</source>
+        <source>Sign messages with your Blakecoin addresses to prove you own them</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+2"/>
-        <source>Verify messages to ensure they were signed with specified Dirac addresses</source>
+        <source>Verify messages to ensure they were signed with specified Blakecoin addresses</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -531,13 +531,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+47"/>
-        <source>Dirac client</source>
-        <translation>Client Dirac</translation>
+        <source>Blakecoin client</source>
+        <translation>Client Blakecoin</translation>
     </message>
     <message numerus="yes">
         <location line="+141"/>
-        <source>%n active connection(s) to Dirac network</source>
-        <translation><numerusform>%n active connections to Dirac network</numerusform><numerusform>%n active connections to Dirac network</numerusform><numerusform>%n active connections to Dirac network</numerusform></translation>
+        <source>%n active connection(s) to Blakecoin network</source>
+        <translation><numerusform>%n active connections to Blakecoin network</numerusform><numerusform>%n active connections to Blakecoin network</numerusform><numerusform>%n active connections to Blakecoin network</numerusform></translation>
     </message>
     <message>
         <location line="+22"/>
@@ -647,7 +647,7 @@ Address: %4
     <message>
         <location line="-23"/>
         <location line="+23"/>
-        <source>URI can not be parsed! This can be caused by an invalid Dirac address or malformed URI parameters.</source>
+        <source>URI can not be parsed! This can be caused by an invalid Blakecoin address or malformed URI parameters.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -662,7 +662,7 @@ Address: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+111"/>
-        <source>A fatal error occurred. Dirac can no longer continue safely and will quit.</source>
+        <source>A fatal error occurred. Blakecoin can no longer continue safely and will quit.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -728,7 +728,7 @@ Address: %4
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid Dirac address.</source>
+        <source>The entered address &quot;%1&quot; is not a valid Blakecoin address.</source>
         <translation>Adresa introdusă &quot;%1&quot; nu este o adresă bitcoin valabilă.</translation>
     </message>
     <message>
@@ -747,8 +747,8 @@ Address: %4
     <message>
         <location filename="../guiutil.cpp" line="+424"/>
         <location line="+12"/>
-        <source>Dirac-Qt</source>
-        <translation>Dirac-Qt</translation>
+        <source>Blakecoin-Qt</source>
+        <translation>Blakecoin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -810,13 +810,13 @@ Address: %4
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start Dirac after logging in to the system.</source>
-        <translation>Porneşte automat programul Dirac la pornirea computerului.</translation>
+        <source>Automatically start Blakecoin after logging in to the system.</source>
+        <translation>Porneşte automat programul Blakecoin la pornirea computerului.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start Dirac on system login</source>
-        <translation>&amp;S Porneşte Dirac la pornirea sistemului</translation>
+        <source>&amp;Start Blakecoin on system login</source>
+        <translation>&amp;S Porneşte Blakecoin la pornirea sistemului</translation>
     </message>
     <message>
         <location line="+35"/>
@@ -835,8 +835,8 @@ Address: %4
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the Dirac client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Deschide automat în router portul aferent clientului Dirac. Funcţionează doar în cazul în care routerul e compatibil UPnP şi opţiunea e activată.</translation>
+        <source>Automatically open the Blakecoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Deschide automat în router portul aferent clientului Blakecoin. Funcţionează doar în cazul în care routerul e compatibil UPnP şi opţiunea e activată.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -845,8 +845,8 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the Dirac network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Conectare la reţeaua Dirac folosind un proxy SOCKS (de exemplu, când conexiunea se stabileşte prin reţeaua Tor)</translation>
+        <source>Connect to the Blakecoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Conectare la reţeaua Blakecoin folosind un proxy SOCKS (de exemplu, când conexiunea se stabileşte prin reţeaua Tor)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -920,8 +920,8 @@ Address: %4
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting Dirac.</source>
-        <translation>Limba interfeței utilizatorului poate fi setat aici. Această setare va avea efect după repornirea Dirac.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Blakecoin.</source>
+        <translation>Limba interfeței utilizatorului poate fi setat aici. Această setare va avea efect după repornirea Blakecoin.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -935,8 +935,8 @@ Address: %4
     </message>
     <message>
         <location line="+9"/>
-        <source>Whether to show Dirac addresses in the transaction list or not.</source>
-        <translation>Vezi dacă adresele Dirac sunt în lista de tranzacție sau nu</translation>
+        <source>Whether to show Blakecoin addresses in the transaction list or not.</source>
+        <translation>Vezi dacă adresele Blakecoin sunt în lista de tranzacție sau nu</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -987,7 +987,7 @@ Address: %4
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting Dirac.</source>
+        <source>This setting will take effect after restarting Blakecoin.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1006,8 +1006,8 @@ Address: %4
     <message>
         <location line="+50"/>
         <location line="+166"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Dirac network after a connection is established, but this process has not completed yet.</source>
-        <translation>Informațiile afișate pot fi expirate. Portofelul tău se sincronizează automat cu rețeaua Dirac după ce o conexiune este stabilita, dar acest proces nu a fost finalizat încă.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Blakecoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Informațiile afișate pot fi expirate. Portofelul tău se sincronizează automat cu rețeaua Blakecoin după ce o conexiune este stabilita, dar acest proces nu a fost finalizat încă.</translation>
     </message>
     <message>
         <location line="-124"/>
@@ -1210,8 +1210,8 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the Dirac-Qt help message to get a list with possible Dirac command-line options.</source>
-        <translation>Arata mesajul de ajutor Dirac-QT pentru a obtine o lista cu posibilele optiuni ale comenzilor Dirac</translation>
+        <source>Show the Blakecoin-Qt help message to get a list with possible Blakecoin command-line options.</source>
+        <translation>Arata mesajul de ajutor Blakecoin-QT pentru a obtine o lista cu posibilele optiuni ale comenzilor Blakecoin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1230,13 +1230,13 @@ Address: %4
     </message>
     <message>
         <location line="-104"/>
-        <source>Dirac - Debug window</source>
-        <translation>Dirac-Fereastra pentru debug</translation>
+        <source>Blakecoin - Debug window</source>
+        <translation>Blakecoin-Fereastra pentru debug</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>Dirac Core</source>
-        <translation>Dirac Core</translation>
+        <source>Blakecoin Core</source>
+        <translation>Blakecoin Core</translation>
     </message>
     <message>
         <location line="+279"/>
@@ -1245,7 +1245,7 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the Dirac debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the Blakecoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation>Deschide logurile debug din directorul curent. Aceasta poate dura cateva secunde pentru fisierele mai mari</translation>
     </message>
     <message>
@@ -1255,7 +1255,7 @@ Address: %4
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-30"/>
-        <source>Welcome to the Dirac RPC console.</source>
+        <source>Welcome to the Blakecoin RPC console.</source>
         <translation>Bun venit la consola bitcoin RPC</translation>
     </message>
     <message>
@@ -1281,7 +1281,7 @@ Address: %4
         <location line="+5"/>
         <location line="+5"/>
         <source>Send Coins</source>
-        <translation>Trimite Dirac</translation>
+        <translation>Trimite Blakecoin</translation>
     </message>
     <message>
         <location line="+50"/>
@@ -1439,8 +1439,8 @@ Address: %4
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a Dirac address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Introduceţi o adresă Dirac (de exemplu: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Blakecoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Introduceţi o adresă Blakecoin (de exemplu: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
 </context>
 <context>
@@ -1463,7 +1463,7 @@ Address: %4
     <message>
         <location line="+18"/>
         <source>The address to sign the message with (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Introduceţi o adresă Dirac (de exemplu: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <translation>Introduceţi o adresă Blakecoin (de exemplu: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1504,8 +1504,8 @@ Address: %4
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this Dirac address</source>
-        <translation>Semneaza mesajul pentru a dovedi ca detii acesta adresa Dirac</translation>
+        <source>Sign the message to prove you own this Blakecoin address</source>
+        <translation>Semneaza mesajul pentru a dovedi ca detii acesta adresa Blakecoin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1536,12 +1536,12 @@ Address: %4
     <message>
         <location line="+21"/>
         <source>The address the message was signed with (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Introduceţi o adresă Dirac (de exemplu: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <translation>Introduceţi o adresă Blakecoin (de exemplu: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified Dirac address</source>
-        <translation>Verifica mesajul pentru a fi sigur ca a fost semnat cu adresa Dirac specifica</translation>
+        <source>Verify the message to ensure it was signed with the specified Blakecoin address</source>
+        <translation>Verifica mesajul pentru a fi sigur ca a fost semnat cu adresa Blakecoin specifica</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1556,8 +1556,8 @@ Address: %4
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a Dirac address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
-        <translation>Introduceţi o adresă Dirac (de exemplu: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
+        <source>Enter a Blakecoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <translation>Introduceţi o adresă Blakecoin (de exemplu: 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -1566,7 +1566,7 @@ Address: %4
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter Dirac signature</source>
+        <source>Enter Blakecoin signature</source>
         <translation>Introduce semnatura bitocin</translation>
     </message>
     <message>
@@ -1640,7 +1640,7 @@ Address: %4
     <name>SplashScreen</name>
     <message>
         <location filename="../splashscreen.cpp" line="+22"/>
-        <source>The Dirac developers</source>
+        <source>The Blakecoin developers</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2128,7 +2128,7 @@ Address: %4
     <message>
         <location filename="../walletmodel.cpp" line="+193"/>
         <source>Send Coins</source>
-        <translation>Trimite Dirac</translation>
+        <translation>Trimite Blakecoin</translation>
     </message>
 </context>
 <context>
@@ -2178,8 +2178,8 @@ Address: %4
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+94"/>
-        <source>Dirac version</source>
-        <translation>versiunea Dirac</translation>
+        <source>Blakecoin version</source>
+        <translation>versiunea Blakecoin</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -2298,7 +2298,7 @@ rpcpassword=%s
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;Blakecoin Alert&quot; admin@foo.com
 </source>
         <translation type="unfinished"/>
     </message>
@@ -2314,7 +2314,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.co
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. Dirac is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s. Blakecoin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2359,7 +2359,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.co
     </message>
     <message>
         <location line="+3"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Dirac will not work properly.</source>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Blakecoin will not work properly.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2609,8 +2609,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.co
     </message>
     <message>
         <location line="+5"/>
-        <source>SSL options: (see the Dirac Wiki for SSL setup instructions)</source>
-        <translation>Optiuni SSl (vezi Dirac wiki pentru intructiunile de instalare)</translation>
+        <source>SSL options: (see the Blakecoin Wiki for SSL setup instructions)</source>
+        <translation>Optiuni SSl (vezi Blakecoin wiki pentru intructiunile de instalare)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2801,12 +2801,12 @@ for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.co
     </message>
     <message>
         <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of Dirac</source>
-        <translation>Eroare incarcare wallet.dat: Portofelul are nevoie de o versiune Dirac mai noua</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Blakecoin</source>
+        <translation>Eroare incarcare wallet.dat: Portofelul are nevoie de o versiune Blakecoin mai noua</translation>
     </message>
     <message>
         <location line="+93"/>
-        <source>Wallet needed to be rewritten: restart Dirac to complete</source>
+        <source>Wallet needed to be rewritten: restart Blakecoin to complete</source>
         <translation>Portofelul trebuie rescris: restarteaza aplicatia bitcoin pentru a face asta.</translation>
     </message>
     <message>
@@ -2868,8 +2868,8 @@ details suggestions history
     </message>
     <message>
         <location line="-25"/>
-        <source>Unable to bind to %s on this computer. Dirac is probably already running.</source>
-        <translation>Imposibilitatea de a lega la% s pe acest computer. Dirac este, probabil, deja în execuție.</translation>
+        <source>Unable to bind to %s on this computer. Blakecoin is probably already running.</source>
+        <translation>Imposibilitatea de a lega la% s pe acest computer. Blakecoin este, probabil, deja în execuție.</translation>
     </message>
     <message>
         <location line="+64"/>

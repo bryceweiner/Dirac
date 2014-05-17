@@ -1,10 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=Bitcoin
-Comment=Bitcoin P2P Cryptocurrency
-Comment[fr]=Bitcoin, monnaie virtuelle cryptographique pair à pair
-Comment[tr]=Bitcoin, eşten eşe kriptografik sanal para birimi
-Exec=/usr/bin/bitcoin-qt %u
+Name=Dirac
+Comment=Dirac P2P Cryptocurrency
+Comment[fr]=Dirac, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Dirac, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/dirac-qt %u
 Terminal=false
 Type=Application
 Icon=/usr/share/pixmaps/bitcoin128.png

@@ -1,6 +1,8 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2013 The Dirac developers
+// Copyright (c) 2013-2014 The Blakecoin developers
+// Copyright (c) 2013 The Photon developers
+// Copyright (c) 2014 The BlakeBitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,6 +20,7 @@
 #include "sync.h"
 #include "version.h"
 #include "ui_interface.h"
+#include "clone.h"
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
 #include <boost/algorithm/string/predicate.hpp> // for startswith() and endswith()
@@ -995,7 +998,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "blakecoin";
+    const char* pszModule = LOWERCASE_NAME;
 #endif
     if (pex)
         return strprintf(
@@ -1034,10 +1037,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Windows < Vista: C:\Documents and Settings\Username\Application Data\Dirac
     // Windows >= Vista: C:\Users\Username\AppData\Roaming\Dirac
     // Mac: ~/Library/Application Support/Dirac
-    // Unix: ~/.blakecoin
+    // Unix: ~/.dirac
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Dirac";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / FIRSTCASE_NAME;
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1049,10 +1052,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "Dirac";
+    return pathRet / FIRSTCASE_NAME;
 #else
     // Unix
-    return pathRet / ".blakecoin";
+    return pathRet / ("." + LOWERCASE_NAME);
 #endif
 #endif
 }
@@ -1093,7 +1096,7 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "blakecoin.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", LOWERCASE_NAME + ".conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
     return pathConfigFile;
 }
@@ -1103,7 +1106,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good())
-        return; // No blakecoin.conf file is OK
+        return; // No dirac.conf file is OK
 
     // clear path cache after loading config file
     fCachedPath[0] = fCachedPath[1] = false;
@@ -1113,7 +1116,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
     for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
     {
-        // Don't overwrite existing settings so command line settings override blakecoin.conf
+        // Don't overwrite existing settings so command line settings override dirac.conf
         string strKey = string("-") + it->string_key;
         if (mapSettingsRet.count(strKey) == 0)
         {
@@ -1127,7 +1130,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "blakecoind.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", LOWERCASE_NAME + "d.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1356,7 +1359,7 @@ void AddTimeData(const CNetAddr& ip, int64 nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong Dirac will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong " + FIRSTCASE_NAME + " will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
                     uiInterface.ThreadSafeMessageBox(strMessage, "", CClientUIInterface::MSG_WARNING);

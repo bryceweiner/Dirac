@@ -22,6 +22,7 @@
 #include "key.h"
 #include "script.h"
 #include "allocators.h"
+#include "clone.h"
 
 static const char* pszBase58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
@@ -272,10 +273,10 @@ class CBitcoinAddress : public CBase58Data
 public:
     enum
     {
-        PUBKEY_ADDRESS = 26,
-        SCRIPT_ADDRESS = 7,
-        PUBKEY_ADDRESS_TEST = 142,
-        SCRIPT_ADDRESS_TEST = 170,
+        PUBKEY_ADDRESS = BASE58_PUBKEY_ADDRESS,
+        SCRIPT_ADDRESS = BASE58_SCRIPT_ADDRESS,
+        PUBKEY_ADDRESS_TEST = BASE58_PUBKEY_TEST_ADDRESS,
+        SCRIPT_ADDRESS_TEST = BASE58_SCRIPT_TEST_ADDRESS,
     };
 
     bool Set(const CKeyID &id) {

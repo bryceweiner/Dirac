@@ -4,13 +4,13 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About Dirac</source>
+        <source>About Blakecoin</source>
         <translation>Bitcoinについて</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;Dirac&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;Dirac&lt;/b&gt; バージョン</translation>
+        <source>&lt;b&gt;Blakecoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;Blakecoin&lt;/b&gt; バージョン</translation>
     </message>
     <message>
         <location line="+57"/>
@@ -29,7 +29,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+0"/>
-        <source>The Dirac developers</source>
+        <source>The Blakecoin developers</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -62,7 +62,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="+63"/>
-        <source>These are your Dirac addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <source>These are your Blakecoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -77,7 +77,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a Dirac address</source>
+        <source>Sign a message to prove you own a Blakecoin address</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -102,7 +102,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-44"/>
-        <source>Verify a message to ensure it was signed with a specified Dirac address</source>
+        <source>Verify a message to ensure it was signed with a specified Blakecoin address</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -117,7 +117,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location filename="../addressbookpage.cpp" line="-5"/>
-        <source>These are your Dirac addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <source>These are your Blakecoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -270,7 +270,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-56"/>
-        <source>Dirac will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
+        <source>Blakecoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your bitcoins from being stolen by malware infecting your computer.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -369,7 +369,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about Dirac</source>
+        <source>Show information about Blakecoin</source>
         <translation>Bitcoinに関する情報を見る</translation>
     </message>
     <message>
@@ -414,12 +414,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-347"/>
-        <source>Send coins to a Dirac address</source>
+        <source>Send coins to a Blakecoin address</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+49"/>
-        <source>Modify configuration options for Dirac</source>
+        <source>Modify configuration options for Blakecoin</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -450,7 +450,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-165"/>
         <location line="+530"/>
-        <source>Dirac</source>
+        <source>Blakecoin</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -475,7 +475,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+22"/>
-        <source>&amp;About Dirac</source>
+        <source>&amp;About Blakecoin</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -495,12 +495,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign messages with your Dirac addresses to prove you own them</source>
+        <source>Sign messages with your Blakecoin addresses to prove you own them</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+2"/>
-        <source>Verify messages to ensure they were signed with specified Dirac addresses</source>
+        <source>Verify messages to ensure they were signed with specified Blakecoin addresses</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -531,12 +531,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+47"/>
-        <source>Dirac client</source>
+        <source>Blakecoin client</source>
         <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <location line="+141"/>
-        <source>%n active connection(s) to Dirac network</source>
+        <source>%n active connection(s) to Blakecoin network</source>
         <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
@@ -647,7 +647,7 @@ Address: %4
     <message>
         <location line="-23"/>
         <location line="+23"/>
-        <source>URI can not be parsed! This can be caused by an invalid Dirac address or malformed URI parameters.</source>
+        <source>URI can not be parsed! This can be caused by an invalid Blakecoin address or malformed URI parameters.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -662,7 +662,7 @@ Address: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+111"/>
-        <source>A fatal error occurred. Dirac can no longer continue safely and will quit.</source>
+        <source>A fatal error occurred. Blakecoin can no longer continue safely and will quit.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -728,7 +728,7 @@ Address: %4
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid Dirac address.</source>
+        <source>The entered address &quot;%1&quot; is not a valid Blakecoin address.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -747,7 +747,7 @@ Address: %4
     <message>
         <location filename="../guiutil.cpp" line="+424"/>
         <location line="+12"/>
-        <source>Dirac-Qt</source>
+        <source>Blakecoin-Qt</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -810,12 +810,12 @@ Address: %4
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start Dirac after logging in to the system.</source>
+        <source>Automatically start Blakecoin after logging in to the system.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start Dirac on system login</source>
+        <source>&amp;Start Blakecoin on system login</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -835,7 +835,7 @@ Address: %4
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the Dirac client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <source>Automatically open the Blakecoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -845,7 +845,7 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the Dirac network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <source>Connect to the Blakecoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -920,7 +920,7 @@ Address: %4
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting Dirac.</source>
+        <source>The user interface language can be set here. This setting will take effect after restarting Blakecoin.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -935,7 +935,7 @@ Address: %4
     </message>
     <message>
         <location line="+9"/>
-        <source>Whether to show Dirac addresses in the transaction list or not.</source>
+        <source>Whether to show Blakecoin addresses in the transaction list or not.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -987,7 +987,7 @@ Address: %4
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting Dirac.</source>
+        <source>This setting will take effect after restarting Blakecoin.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1006,7 +1006,7 @@ Address: %4
     <message>
         <location line="+50"/>
         <location line="+166"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Dirac network after a connection is established, but this process has not completed yet.</source>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Blakecoin network after a connection is established, but this process has not completed yet.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1210,7 +1210,7 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the Dirac-Qt help message to get a list with possible Dirac command-line options.</source>
+        <source>Show the Blakecoin-Qt help message to get a list with possible Blakecoin command-line options.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1230,12 +1230,12 @@ Address: %4
     </message>
     <message>
         <location line="-104"/>
-        <source>Dirac - Debug window</source>
+        <source>Blakecoin - Debug window</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+25"/>
-        <source>Dirac Core</source>
+        <source>Blakecoin Core</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1245,7 +1245,7 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the Dirac debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the Blakecoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1255,7 +1255,7 @@ Address: %4
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-30"/>
-        <source>Welcome to the Dirac RPC console.</source>
+        <source>Welcome to the Blakecoin RPC console.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1439,7 +1439,7 @@ Address: %4
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a Dirac address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Blakecoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1504,7 +1504,7 @@ Address: %4
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this Dirac address</source>
+        <source>Sign the message to prove you own this Blakecoin address</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1540,7 +1540,7 @@ Address: %4
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified Dirac address</source>
+        <source>Verify the message to ensure it was signed with the specified Blakecoin address</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1556,7 +1556,7 @@ Address: %4
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a Dirac address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
+        <source>Enter a Blakecoin address (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1566,7 +1566,7 @@ Address: %4
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter Dirac signature</source>
+        <source>Enter Blakecoin signature</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1640,7 +1640,7 @@ Address: %4
     <name>SplashScreen</name>
     <message>
         <location filename="../splashscreen.cpp" line="+22"/>
-        <source>The Dirac developers</source>
+        <source>The Blakecoin developers</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2178,8 +2178,8 @@ Address: %4
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+94"/>
-        <source>Dirac version</source>
-        <translation>Dirac Bertsio</translation>
+        <source>Blakecoin version</source>
+        <translation>Blakecoin Bertsio</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -2297,7 +2297,7 @@ rpcpassword=%s
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;Blakecoin Alert&quot; admin@foo.com
 </source>
         <translation type="unfinished"/>
     </message>
@@ -2313,7 +2313,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.co
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. Dirac is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s. Blakecoin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2358,7 +2358,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.co
     </message>
     <message>
         <location line="+3"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Dirac will not work properly.</source>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Blakecoin will not work properly.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2608,7 +2608,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.co
     </message>
     <message>
         <location line="+5"/>
-        <source>SSL options: (see the Dirac Wiki for SSL setup instructions)</source>
+        <source>SSL options: (see the Blakecoin Wiki for SSL setup instructions)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2798,12 +2798,12 @@ for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.co
     </message>
     <message>
         <location line="+1"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of Dirac</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of Blakecoin</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+93"/>
-        <source>Wallet needed to be rewritten: restart Dirac to complete</source>
+        <source>Wallet needed to be rewritten: restart Blakecoin to complete</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2863,7 +2863,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Dirac Alert&quot; admin@foo.co
     </message>
     <message>
         <location line="-25"/>
-        <source>Unable to bind to %s on this computer. Dirac is probably already running.</source>
+        <source>Unable to bind to %s on this computer. Blakecoin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>

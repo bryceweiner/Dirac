@@ -26,10 +26,6 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
     ui->clearButton->setIcon(QIcon());
     ui->sendButton->setIcon(QIcon());
 #endif
-#if QT_VERSION >= 0x040700
-    /* Do not move this to the XML file, Qt before 4.7 will choke on it */
-    ui->editTxComment->setPlaceholderText(tr("Enter a transaction comment (MAX 256 Characters) (Note: This information is public)"));
-#endif
 
     addEntry();
 
@@ -72,8 +68,6 @@ void SendCoinsDialog::on_sendButton_clicked()
     if(!model)
         return;
 
-    QString txcomment = ui->editTxComment->text();
-
     for(int i = 0; i < ui->entries->count(); ++i)
     {
         SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
@@ -99,7 +93,7 @@ void SendCoinsDialog::on_sendButton_clicked()
     QStringList formatted;
     foreach(const SendCoinsRecipient &rcp, recipients)
     {
-        formatted.append(tr("<b>%1</b> to %2 (%3)").arg(BitcoinUnits::formatWithUnit(BitcoinUnits::BLC, rcp.amount), Qt::escape(rcp.label), rcp.address));
+        formatted.append(tr("<b>%1</b> to %2 (%3)").arg(BitcoinUnits::formatWithUnit(BitcoinUnits::B, rcp.amount), Qt::escape(rcp.label), rcp.address));
     }
 
     fNewRecipientAllowed = false;
@@ -123,7 +117,7 @@ void SendCoinsDialog::on_sendButton_clicked()
         return;
     }
 
-    WalletModel::SendCoinsReturn sendstatus = model->sendCoins(txcomment, recipients);
+    WalletModel::SendCoinsReturn sendstatus = model->sendCoins(recipients);
     switch(sendstatus.status)
     {
     case WalletModel::InvalidAddress:
@@ -144,7 +138,7 @@ void SendCoinsDialog::on_sendButton_clicked()
     case WalletModel::AmountWithFeeExceedsBalance:
         QMessageBox::warning(this, tr("Send Coins"),
             tr("The total exceeds your balance when the %1 transaction fee is included.").
-            arg(BitcoinUnits::formatWithUnit(BitcoinUnits::BLC, sendstatus.fee)),
+            arg(BitcoinUnits::formatWithUnit(BitcoinUnits::B, sendstatus.fee)),
             QMessageBox::Ok, QMessageBox::Ok);
         break;
     case WalletModel::DuplicateAddress:
@@ -173,7 +167,6 @@ void SendCoinsDialog::on_sendButton_clicked()
 
 void SendCoinsDialog::clear()
 {
-    ui->editTxComment->clear();
     // Remove entries until only one left
     while(ui->entries->count())
     {
@@ -239,9 +232,6 @@ void SendCoinsDialog::removeEntry(SendCoinsEntry* entry)
 
 QWidget *SendCoinsDialog::setupTabChain(QWidget *prev)
 {
-    QWidget::setTabOrder(prev, ui->editTxComment);
-    prev = ui->editTxComment;
-
     for(int i = 0; i < ui->entries->count(); ++i)
     {
         SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());

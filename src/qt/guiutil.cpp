@@ -8,6 +8,7 @@
 
 #include "util.h"
 #include "init.h"
+#include "clone.h"
 
 #include <QDateTime>
 #include <QDoubleValidator>
@@ -79,8 +80,8 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no blakecoin URI
-    if(!uri.isValid() || uri.scheme() != QString("blakecoin"))
+    // return if URI is not valid or is no Dirac URI
+    if(!uri.isValid() || uri.scheme() != QString(LOWERCASE_NAME))
         return false;
 
     SendCoinsRecipient rv;
@@ -105,7 +106,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!BitcoinUnits::parse(BitcoinUnits::BLC, i->second, &rv.amount))
+                if(!BitcoinUnits::parse(BitcoinUnits::B, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -125,13 +126,13 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert blakecoin:// to blakecoin:
+    // Convert dirac:// to dirac:
     //
-    //    Cannot handle this later, because blakecoin:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because dirac:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("blakecoin://"))
+    if(uri.startsWith(LOWERCASE_NAME + "://"))
     {
-        uri.replace(0, 10, "blakecoin:");
+        uri.replace(0, 10, LOWERCASE_NAME + ":");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -277,7 +278,7 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt)
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "Dirac.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / (FIRSTCASE_NAME + ".lnk");
 }
 
 bool GetStartOnSystemStartup()
@@ -359,7 +360,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "blakecoin.desktop";
+    return GetAutostartDir() / (LOWERCASE_NAME + ".desktop");
 }
 
 bool GetStartOnSystemStartup()
@@ -397,10 +398,10 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         boost::filesystem::ofstream optionFile(GetAutostartFilePath(), std::ios_base::out|std::ios_base::trunc);
         if (!optionFile.good())
             return false;
-        // Write a blakecoin.desktop file to the autostart directory:
+        // Write a dirac.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=Dirac\n";
+        optionFile << "Name=" << FIRSTCASE_NAME << "\n";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -421,10 +422,10 @@ bool SetStartOnSystemStartup(bool fAutoStart) { return false; }
 HelpMessageBox::HelpMessageBox(QWidget *parent) :
     QMessageBox(parent)
 {
-    header = tr("Dirac-Qt") + " " + tr("version") + " " +
+    header = tr(FIRSTCASE_NAME + "-Qt") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
-        "  blakecoin-qt [" + tr("command-line options") + "]                     " + "\n";
+        "  " + LOWERCASE_NAME + "-qt [" + tr("command-line options") + "]                     " + "\n";
 
     coreOptions = QString::fromStdString(HelpMessage());
 
@@ -433,7 +434,7 @@ HelpMessageBox::HelpMessageBox(QWidget *parent) :
         "  -min                   " + tr("Start minimized") + "\n" +
         "  -splash                " + tr("Show splash screen on startup (default: 1)") + "\n";
 
-    setWindowTitle(tr("Dirac-Qt"));
+    setWindowTitle(tr(FIRSTCASE_NAME + "-Qt"));
     setTextFormat(Qt::PlainText);
     // setMinimumWidth is ignored for QMessageBox so put in non-breaking spaces to make it wider.
     setText(header + QString(QChar(0x2003)).repeated(50));

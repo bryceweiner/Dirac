@@ -1,46 +1,47 @@
-#include "bignum.h"
+// Copyright (C) 2014 The Dirac developers
+// Distributed under the MIT/X11 software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-static const char* pszCoinName = "Dirac";
-static const char* pszCoinLowercase = "dirac";
-static const char* pszCoinUppercase = "DIRAC";
-static const char* pszCoinAbbr = "DAC";
+const char* LOWERCASE_NAME = "dirac";
+const char* CAPITALIZED_NAME = "DIRAC";
+const char* FIRSTCASE_NAME = "Dirac";
+const char* ISO4217_TRADING_SYMBOL = "XDQ";
+const char* WEBSITE = "dirac.io"
+const char* MONETARY_SYMBOL = "Ð";
+const char* MONETARY_SYMBOL_ASCII = "\u208";
+const int BASE58_PUBKEY_ADDRESS = 90; // "d"
+const int BASE58_SCRIPT_ADDRESS = 8,
+const int BASE58_PUBKEY_ADDRESS_TEST = 143,
+const int BASE58_SCRIPT_ADDRESS_TEST = 171,
+// DNS seeds
+// Each pair gives a source name and a seed name.
+// The first name is used as information source for addrman.
+// The second name should resolve to a list of seed addresses.
+static const char *strMainNetDNSSeed[][2] = {
+    {"dirac.io", "dirac.io"},
+	{"107.170.75.63", "107.170.75.63"},
+    {NULL, NULL}
+};
 
-// Change these
-static const unsigned int MAIN_RPCPORT = 11011;
-static const unsigned int MAIN_DEFAULTPORT = 10101;
-static const unsigned int TEST_RPCPORT = 22022;
-static const unsigned int TEST_DEFAULTPORT = 20202;
+static const char *strTestNetDNSSeed[][2] = {
+    {"dirac.io", "dirac.io"},
+	{"107.170.75.63", "107.170.75.63"},
+	{NULL, NULL}
+};
+
+const char* pszTimestamp = "This is how the world ends; Not with a bang, but a whimper.";
 
 /** No amount larger than this (in satoshi) is valid */
-static const int64 MAX_MONEY = 7000000000 * COIN; // 7 billion
-// Now go to UTIL.H, line 36
-static const int64 nGenesisBlockRewardCoin = 5 * COIN;
-static const int64 nBlockRewardStartCoin = 25 * COIN;
-
-
+static const int64 MAX_MONEY = 2272800 * COIN;
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
-static const int COINBASE_MATURITY = 120;
-/** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
-static const int MINTXFEE = 10000; // Override with -mintxfee
-/** Fees smaller than this (in satoshi) are considered zero fee (for relaying) */
-static const int MINRELAYTXFEE = 10000;
+static const int COINBASE_MATURITY = 100;
 
-//Settings for Kimoto's Gravity Well
-static const float gravitationalPull = 28.2;
-static const int transationTimeTarget = 7 * 60; // in seconds
-static const int secondsInADay = 60 * 60 * 24;
-static const float minimumGravitationalLensing = 0.23; // in seconds
-static const float maximumGravitationalLensing = 1; // in seconds
+static const int64 nGenesisBlockRewardCoin = 50 * COIN;
+static const int64 nTargetTimespan = 7 * 24 * 60 * 60; // one week
+static const int64 nTargetSpacing = 60 * 3; // Block time
+static const int64 nInterval = nTargetTimespan / nTargetSpacing;
 
-// Don't mess with this if you don't know what it is.  If you do know what it is, it's nice to have it here.
-static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
 
-// The message start string is designed to be unlikely to occur in normal data.
-// The characters are rarely used upper ASCII, not valid as UTF-8, and produce
-// a large 4-byte int at any alignment.
-// http://www.epochconverter.com/
-// Main net
-static const unsigned char pchMessageStartMainNet[4] = { 0xf9, 0xbe, 0xb4, 0xd2 };
-//Test net
-static const unsigned char pchMessageStartTestNet[4] = { 0x9f, 0xeb, 0x4b, 0x2d };
-
+// DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING
+static const int64 COIN = 100000000;
+static const int64 CENT = 1000000;

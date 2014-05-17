@@ -111,7 +111,7 @@ void OptionsDialog::setModel(OptionsModel *model)
         mapper->toFirst();
     }
 
-    /* update the display unit, to not use the default ("BLC") */
+    /* update the display unit, to not use the default ("B") */
     updateDisplayUnit();
 
     /* warn only when language selection changes by user action (placed here so init via mapper doesn't trigger this) */
@@ -223,7 +223,7 @@ void OptionsDialog::showRestartWarning_Proxy()
 {
     if(!fRestartWarningDisplayed_Proxy)
     {
-        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting Dirac."), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting " + FIRSTCASE_NAME + "."), QMessageBox::Ok);
         fRestartWarningDisplayed_Proxy = true;
     }
 }
@@ -232,7 +232,7 @@ void OptionsDialog::showRestartWarning_Lang()
 {
     if(!fRestartWarningDisplayed_Lang)
     {
-        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting Dirac."), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Warning"), tr("This setting will take effect after restarting " + FIRSTCASE_NAME + "."), QMessageBox::Ok);
         fRestartWarningDisplayed_Lang = true;
     }
 }

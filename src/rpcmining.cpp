@@ -8,7 +8,7 @@
 #include "init.h"
 #include "bitcoinrpc.h"
 #include "auxpow.h"
-
+#include "clone.h"
 using namespace json_spirit;
 using namespace std;
 
@@ -150,10 +150,10 @@ Value getwork(const Array& params, bool fHelp)
             "If [data] is specified, tries to solve the block and returns true if it was successful.");
 
     if (vNodes.empty())
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Dirac is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, FIRSTCASE_NAME + " is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Dirac is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, FIRSTCASE_NAME + " is downloading blocks...");
 
     typedef map<uint256, pair<CBlock*, CScript> > mapNewBlock_t;
     static mapNewBlock_t mapNewBlock;    // FIXME: thread safety
@@ -260,10 +260,10 @@ Value getwork2(const Array& params, bool fHelp)
             "If [data] is specified, tries to solve the block and returns true if it was successful.");
 
     if (vNodes.empty())
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Dirac is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, FIRSTCASE_NAME + " is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Dirac is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, FIRSTCASE_NAME + " is downloading blocks...");
 
     typedef map<uint256, pair<CBlock*, CScript> > mapNewBlock_t;
     static mapNewBlock_t mapNewBlock;    // FIXME: thread safety
@@ -392,10 +392,10 @@ Value getblocktemplate(const Array& params, bool fHelp)
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid mode");
 
     if (vNodes.empty())
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Dirac is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, FIRSTCASE_NAME + " is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Dirac is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, FIRSTCASE_NAME + " is downloading blocks...");
 
     // Update block
     static unsigned int nTransactionsUpdatedLast;
@@ -550,10 +550,10 @@ Value getworkaux(const Array& params, bool fHelp)
             );
 
     if (vNodes.empty())
-        throw JSONRPCError(-9, "Dirac is not connected!");
+        throw JSONRPCError(-9, "I0Coin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(-10, "Dirac is downloading blocks...");
+        throw JSONRPCError(-10, "I0Coin is downloading blocks...");
 
     static map<uint256, pair<CBlock*, unsigned int> > mapNewBlock;
     static vector<CBlockTemplate*> vNewBlockTemplate;
@@ -711,10 +711,10 @@ Value getauxblock(const Array& params, bool fHelp)
             "the aux proof of work and returns true if it was successful.");
 
     if (vNodes.empty())
-        throw JSONRPCError(-9, "Dirac is not connected!");
+        throw JSONRPCError(-9, "I0Coin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(-10, "Dirac is downloading blocks...");
+        throw JSONRPCError(-10, "I0Coin is downloading blocks...");
 
     static map<uint256, CBlock*> mapNewBlock;
     static vector<CBlockTemplate*> vNewBlockTemplate;
@@ -726,7 +726,7 @@ Value getauxblock(const Array& params, bool fHelp)
         static unsigned int nTransactionsUpdatedLast;
         static CBlockIndex* pindexPrev;
         static int64 nStart;
-    static CBlock* pblock;
+	static CBlock* pblock;
         static CBlockTemplate* pblocktemplate;
         if (pindexPrev != pindexBest ||
             (nTransactionsUpdated != nTransactionsUpdatedLast && GetTime() - nStart > 60))
@@ -748,7 +748,7 @@ Value getauxblock(const Array& params, bool fHelp)
             if (!pblocktemplate)
                 throw JSONRPCError(-7, "Out of memory");
 
-        pblock = &pblocktemplate->block;
+	    pblock = &pblocktemplate->block;
             // Update nTime
             pblock->nTime = max(pindexPrev->GetMedianTimePast()+1, GetAdjustedTime());
             pblock->nNonce = 0;

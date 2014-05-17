@@ -1,11 +1,13 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
+// Copyright (c) 2014 The Dirac developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef BITCOIN_UTIL_H
 #define BITCOIN_UTIL_H
 
 #include "uint256.h"
+#include "clone.h"
 #include <stdarg.h>
 
 #ifndef WIN32
@@ -33,9 +35,8 @@ typedef int pid_t; /* define for Windows compatibility */
 typedef long long  int64;
 typedef unsigned long long  uint64;
 
-static const int64 CENT = 1000000;
-static const int64 COIN = 100000000;
-
+//static const int64 COIN = 100000000;
+//static const int64 CENT = 1000000;
 
 #define loop                for (;;)
 #define BEGIN(a)            ((char*)&(a))
@@ -560,7 +561,7 @@ inline uint32_t ByteReverse(uint32_t value)
 //    threadGroup.create_thread(boost::bind(&LoopForever<boost::function<void()> >, "nothing", f, milliseconds));
 template <typename Callable> void LoopForever(const char* name,  Callable func, int64 msecs)
 {
-    std::string s = strprintf("blakecoin-%s", name);
+    std::string s = strprintf("%s-%s", LOWERCASE_NAME, name);
     RenameThread(s.c_str());
     printf("%s thread start\n", name);
     try
@@ -586,7 +587,7 @@ template <typename Callable> void LoopForever(const char* name,  Callable func, 
 // .. and a wrapper that just calls func once
 template <typename Callable> void TraceThread(const char* name,  Callable func)
 {
-    std::string s = strprintf("blakecoin-%s", name);
+    std::string s = strprintf("%s-%s", LOWERCASE_NAME, name);
     RenameThread(s.c_str());
     try
     {

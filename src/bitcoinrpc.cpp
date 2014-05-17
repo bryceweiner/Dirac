@@ -1,5 +1,6 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
+// Copyright (C) 2014 The Dirac developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -44,7 +45,7 @@ static boost::thread_group* rpc_worker_group = NULL;
 
 static inline unsigned short GetDefaultRPCPort()
 {
-    return GetBoolArg("-testnet", false) ? TEST_RPCPORT : MAIN_RPCPORT;
+    return GetBoolArg("-testnet", false) ?  1812: 243;
 }
 
 Object JSONRPCError(int code, const string& message)
@@ -184,10 +185,10 @@ Value stop(const Array& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "stop\n"
-            "Stop Dirac server.");
+            "Stop " + FIRSTCASE_NAME + " server.");
     // Shutdown will take long enough that the response should get back
     StartShutdown();
-    return "Dirac server stopping";
+    return FIRSTCASE_NAME + " server stopping";
 }
 
 
@@ -247,9 +248,12 @@ static const CRPCCommand vRPCCommands[] =
     { "verifymessage",          &verifymessage,          false,     false },
     { "getwork",                &getwork,                true,      false },
     { "getwork2",               &getwork2,               true,      false },
+    { "getworkaux",             &getworkaux,             true,      false },
     { "listaccounts",           &listaccounts,           false,     false },
     { "settxfee",               &settxfee,               false,     false },
     { "getblocktemplate",       &getblocktemplate,       true,      false },
+    { "getauxblock",            &getauxblock,            true,      false },
+    { "submitblock",            &submitblock,            false,     false },
     { "submitblock",            &submitblock,            false,     false },
     { "listsinceblock",         &listsinceblock,         false,     false },
     { "dumpprivkey",            &dumpprivkey,            true,      false },
@@ -297,7 +301,7 @@ string HTTPPost(const string& strMsg, const map<string,string>& mapRequestHeader
 {
     ostringstream s;
     s << "POST / HTTP/1.1\r\n"
-      << "User-Agent: blakecoin-json-rpc/" << FormatFullVersion() << "\r\n"
+      << "User-Agent: " << LOWERCASE_NAME << "-json-rpc/" << FormatFullVersion() << "\r\n"
       << "Host: 127.0.0.1\r\n"
       << "Content-Type: application/json\r\n"
       << "Content-Length: " << strMsg.size() << "\r\n"
@@ -328,7 +332,7 @@ static string HTTPReply(int nStatus, const string& strMsg, bool keepalive)
     if (nStatus == HTTP_UNAUTHORIZED)
         return strprintf("HTTP/1.0 401 Authorization Required\r\n"
             "Date: %s\r\n"
-            "Server: blakecoin-json-rpc/%s\r\n"
+            "Server: %s-json-rpc/%s\r\n"
             "WWW-Authenticate: Basic realm=\"jsonrpc\"\r\n"
             "Content-Type: text/html\r\n"
             "Content-Length: 296\r\n"
@@ -341,7 +345,7 @@ static string HTTPReply(int nStatus, const string& strMsg, bool keepalive)
             "<META HTTP-EQUIV='Content-Type' CONTENT='text/html; charset=ISO-8859-1'>\r\n"
             "</HEAD>\r\n"
             "<BODY><H1>401 Unauthorized.</H1></BODY>\r\n"
-            "</HTML>\r\n", rfc1123Time().c_str(), FormatFullVersion().c_str());
+            "</HTML>\r\n", rfc1123Time().c_str(), LOWERCASE_NAME, FormatFullVersion().c_str());
     const char *cStatus;
          if (nStatus == HTTP_OK) cStatus = "OK";
     else if (nStatus == HTTP_BAD_REQUEST) cStatus = "Bad Request";
@@ -355,7 +359,7 @@ static string HTTPReply(int nStatus, const string& strMsg, bool keepalive)
             "Connection: %s\r\n"
             "Content-Length: %"PRIszu"\r\n"
             "Content-Type: application/json\r\n"
-            "Server: blakecoin-json-rpc/%s\r\n"
+            "Server: %s-json-rpc/%s\r\n"
             "\r\n"
             "%s",
         nStatus,
@@ -363,6 +367,7 @@ static string HTTPReply(int nStatus, const string& strMsg, bool keepalive)
         rfc1123Time().c_str(),
         keepalive ? "keep-alive" : "close",
         strMsg.size(),
+        LOWERCASE_NAME,
         FormatFullVersion().c_str(),
         strMsg.c_str());
 }
@@ -738,7 +743,7 @@ void StartRPCThreads()
     {
         unsigned char rand_pwd[32];
         RAND_bytes(rand_pwd, 32);
-        string strWhatAmI = "To use blakecoind";
+        string strWhatAmI = "To use " + LOWERCASE_NAME + "d";
         if (mapArgs.count("-server"))
             strWhatAmI = strprintf(_("To use the %s option"), "\"-server\"");
         else if (mapArgs.count("-daemon"))
@@ -747,17 +752,19 @@ void StartRPCThreads()
             _("%s, you must set a rpcpassword in the configuration file:\n"
               "%s\n"
               "It is recommended you use the following random password:\n"
-              "rpcuser=blakecoinrpc\n"
+              "rpcuser=%srpc\n"
               "rpcpassword=%s\n"
               "(you do not need to remember this password)\n"
               "The username and password MUST NOT be the same.\n"
               "If the file does not exist, create it with owner-readable-only file permissions.\n"
               "It is also recommended to set alertnotify so you are notified of problems;\n"
-              "for example: alertnotify=echo %%s | mail -s \"Dirac Alert\" admin@foo.com\n"),
+              "for example: alertnotify=echo %%s | mail -s \"%s Alert\" admin@foo.com\n"),
                 strWhatAmI.c_str(),
                 GetConfigFile().string().c_str(),
+                LOWERCASE_NAME,
                 EncodeBase58(&rand_pwd[0],&rand_pwd[0]+32).c_str()),
-                "", CClientUIInterface::MSG_ERROR);
+                "", CClientUIInterface::MSG_ERROR,
+                FIRSTCASE_NAME);
         StartShutdown();
         return;
     }
@@ -890,7 +897,8 @@ void JSONRequest::parse(const Value& valRequest)
     if (valMethod.type() != str_type)
         throw JSONRPCError(RPC_INVALID_REQUEST, "Method must be a string");
     strMethod = valMethod.get_str();
-    if (strMethod != "getwork" && strMethod != "getwork2" && strMethod != "getblocktemplate")
+    if (strMethod != "getwork" && strMethod != "getwork2" && strMethod != "getblocktemplate" &&
+            strMethod != "getworkaux" && strMethod != "getauxblock")
         printf("ThreadRPCServer method=%s\n", strMethod.c_str());
 
     // Parse params
@@ -1184,6 +1192,7 @@ Array RPCConvertValues(const std::string &strMethod, const std::vector<std::stri
     if (strMethod == "createrawtransaction"   && n > 1) ConvertTo<Object>(params[1]);
     if (strMethod == "signrawtransaction"     && n > 1) ConvertTo<Array>(params[1], true);
     if (strMethod == "signrawtransaction"     && n > 2) ConvertTo<Array>(params[2], true);
+    if (strMethod == "getworkaux"             && n > 2) ConvertTo<boost::int64_t>(params[2]);
     if (strMethod == "gettxout"               && n > 1) ConvertTo<boost::int64_t>(params[1]);
     if (strMethod == "gettxout"               && n > 2) ConvertTo<bool>(params[2]);
     if (strMethod == "lockunspent"            && n > 0) ConvertTo<bool>(params[0]);

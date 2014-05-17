@@ -82,7 +82,7 @@
           <string>Automatically start Dirac after logging in to the system.</string>
          </property>
          <property name="text">
-          <string>&amp;Start Dirac on system login</string>
+          <string>&amp;Start Dirac on system login  - Only if you want to 'energize' </string>
          </property>
         </widget>
        </item>

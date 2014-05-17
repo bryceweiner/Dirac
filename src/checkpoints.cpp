@@ -9,7 +9,7 @@
 
 #include "main.h"
 #include "uint256.h"
-#include "genesis.h"
+
 namespace Checkpoints
 {
     typedef std::map<int, uint256> MapCheckpoints;
@@ -35,11 +35,11 @@ namespace Checkpoints
     // + Contains no strange transactions
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
-        ( 0, hashGenesisBlockMainNet)
+        ( 0, uint256("0x000000dcb4434e2148558a0a5c71e5c06d864accef97d75ac1c031405deb3371"))
         ;
     static const CCheckpointData data = {
         &mapCheckpoints,
-        timeGenesisBlockMainNet, // * UNIX timestamp of last checkpoint block
+        1399109785, // * UNIX timestamp of last checkpoint block
         0,     // * total number of transactions between genesis and last checkpoint
                     //   (the tx=... number in the SetBestChain debug.log lines)
         60000.0     // * estimated number of transactions per day after checkpoint
@@ -47,11 +47,11 @@ namespace Checkpoints
 
     static MapCheckpoints mapCheckpointsTestnet = 
         boost::assign::map_list_of
-        ( 0, hashGenesisBlockTestNet)
+        ( 0, uint256("0x00000052d978f26d698e0c4dbce9f8139a69f2fbda37715149146776aeb70d5b"))
         ;
     static const CCheckpointData dataTestnet = {
         &mapCheckpointsTestnet,
-        timeGenesisBlockTestNet,
+        1392351202,
         0,
         60000.0
     };

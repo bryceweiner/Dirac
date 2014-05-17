@@ -10,6 +10,9 @@
 using namespace json_spirit;
 using namespace std;
 
+// from rpcraw.cpp
+void TxToJSON(const CTransaction& tx, const uint256 hashBlock, Object& entry);
+
 void ScriptPubKeyToJSON(const CScript& scriptPubKey, Object& out);
 
 double GetDifficulty(const CBlockIndex* blockindex)
@@ -87,9 +90,6 @@ Object blockToJSON(const CBlock& block, const CBlockIndex* blockindex)
         auxpow.push_back(Pair("parent_block", Value(parent_block)));
         result.push_back(Pair("auxpow", Value(auxpow)));
     }
-
-
-
     Array txs;
     BOOST_FOREACH(const CTransaction&tx, block.vtx)
         txs.push_back(tx.GetHash().GetHex());

@@ -8,7 +8,7 @@ class QDoubleSpinBox;
 class QValueComboBox;
 QT_END_NAMESPACE
 
-/** Widget for entering blakecoin amounts.
+/** Widget for entering Dirac amounts.
   */
 class BitcoinAmountField: public QWidget
 {

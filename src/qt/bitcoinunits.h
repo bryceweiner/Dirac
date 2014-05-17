@@ -19,9 +19,9 @@ public:
      */
     enum Unit
     {
-        BLC,
-        mBLC,
-        uBLC
+        B,
+        mB,
+        uB
     };
 
     //! @name Static API

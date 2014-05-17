@@ -47,7 +47,6 @@ void WalletTxToJSON(const CWalletTx& wtx, Object& entry)
     entry.push_back(Pair("txid", wtx.GetHash().GetHex()));
     entry.push_back(Pair("time", (boost::int64_t)wtx.GetTxTime()));
     entry.push_back(Pair("timereceived", (boost::int64_t)wtx.nTimeReceived));
-    entry.push_back(Pair("tx-comment", wtx.strTxComment));
     BOOST_FOREACH(const PAIRTYPE(string,string)& item, wtx.mapValue)
         entry.push_back(Pair(item.first, item.second));
 }
@@ -97,7 +96,7 @@ Value getnewaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "getnewaddress [account]\n"
-            "Returns a new Dirac address for receiving payments.  "
+            "Returns a new " + FIRSTCASE_NAME + " address for receiving payments.  "
             "If [account] is specified (recommended), it is added to the address book "
             "so payments received with the address will be credited to [account].");
 
@@ -164,7 +163,7 @@ Value getaccountaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaccountaddress <account>\n"
-            "Returns the current Dirac address for receiving payments to this account.");
+            "Returns the current " + FIRSTCASE_NAME + " address for receiving payments to this account.");
 
     // Parse the account first so we don't generate a key if there's an error
     string strAccount = AccountFromValue(params[0]);
@@ -182,12 +181,12 @@ Value setaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "setaccount <blakecoinaddress> <account>\n"
+            "setaccount <" + LOWERCASE_NAME + "address> <account>\n"
             "Sets the account associated with the given address.");
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Dirac address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid " + FIRSTCASE_NAME + " address");
 
 
     string strAccount;
@@ -212,12 +211,12 @@ Value getaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "getaccount <blakecoinaddress>\n"
+            "getaccount <" + LOWERCASE_NAME + "address>\n"
             "Returns the account associated with the given address.");
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Dirac address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid " + FIRSTCASE_NAME + " address");
 
     string strAccount;
     map<CTxDestination, string>::iterator mi = pwalletMain->mapAddressBook.find(address.Get());
@@ -252,13 +251,13 @@ Value sendtoaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 2 || params.size() > 4)
         throw runtime_error(
-            "sendtoaddress <blakecoinaddress> <amount> [comment] [comment-to]\n"
+            "sendtoaddress <" + LOWERCASE_NAME + "address> <amount> [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.00000001"
             + HelpRequiringPassphrase());
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Dirac address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid " + FIRSTCASE_NAME + " address");
 
     // Amount
     int64 nAmount = AmountFromValue(params[1]);
@@ -269,19 +268,11 @@ Value sendtoaddress(const Array& params, bool fHelp)
         wtx.mapValue["comment"] = params[2].get_str();
     if (params.size() > 3 && params[3].type() != null_type && !params[3].get_str().empty())
         wtx.mapValue["to"]      = params[3].get_str();
-    // Transaction comment
-    std::string txcomment;
-    if (params.size() > 4 && params[4].type() != null_type && !params[4].get_str().empty())
-    {
-        txcomment = params[4].get_str();
-        if (txcomment.length() > MAX_TX_COMMENT_LEN)
-            txcomment.resize(MAX_TX_COMMENT_LEN);
-    }
 
     if (pwalletMain->IsLocked())
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with walletpassphrase first.");
 
-    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx, false, txcomment);
+    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx);
     if (strError != "")
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
 
@@ -323,7 +314,7 @@ Value signmessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 2)
         throw runtime_error(
-            "signmessage <blakecoinaddress> <message>\n"
+            "signmessage <" + LOWERCASE_NAME + "address> <message>\n"
             "Sign a message with the private key of an address");
 
     EnsureWalletIsUnlocked();
@@ -358,7 +349,7 @@ Value verifymessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 3)
         throw runtime_error(
-            "verifymessage <blakecoinaddress> <signature> <message>\n"
+            "verifymessage <" + LOWERCASE_NAME + "address> <signature> <message>\n"
             "Verify a signed message");
 
     string strAddress  = params[0].get_str();
@@ -395,14 +386,14 @@ Value getreceivedbyaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "getreceivedbyaddress <blakecoinaddress> [minconf=1]\n"
-            "Returns the total amount received by <blakecoinaddress> in transactions with at least [minconf] confirmations.");
+            "getreceivedbyaddress <" + LOWERCASE_NAME + "address> [minconf=1]\n"
+            "Returns the total amount received by <" + LOWERCASE_NAME + "address> in transactions with at least [minconf] confirmations.");
 
     // Dirac address
     CBitcoinAddress address = CBitcoinAddress(params[0].get_str());
     CScript scriptPubKey;
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Dirac address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid " + FIRSTCASE_NAME + " address");
     scriptPubKey.SetDestination(address.Get());
     if (!IsMine(*pwalletMain,scriptPubKey))
         return (double)0.0;
@@ -616,14 +607,14 @@ Value sendfrom(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 3 || params.size() > 6)
         throw runtime_error(
-            "sendfrom <fromaccount> <toblakecoinaddress> <amount> [minconf=1] [comment] [comment-to]\n"
+            "sendfrom <fromaccount> <to" + LOWERCASE_NAME + "address> <amount> [minconf=1] [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.00000001"
             + HelpRequiringPassphrase());
 
     string strAccount = AccountFromValue(params[0]);
     CBitcoinAddress address(params[1].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Dirac address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid " + FIRSTCASE_NAME + " address");
     int64 nAmount = AmountFromValue(params[2]);
     int nMinDepth = 1;
     if (params.size() > 3)
@@ -635,13 +626,6 @@ Value sendfrom(const Array& params, bool fHelp)
         wtx.mapValue["comment"] = params[4].get_str();
     if (params.size() > 5 && params[5].type() != null_type && !params[5].get_str().empty())
         wtx.mapValue["to"]      = params[5].get_str();
-    std::string txcomment;
-    if (params.size() > 6 && params[6].type() != null_type && !params[6].get_str().empty())
-    {
-        txcomment = params[6].get_str();
-        if (txcomment.length() > MAX_TX_COMMENT_LEN)
-            txcomment.resize(MAX_TX_COMMENT_LEN);
-    }
 
     EnsureWalletIsUnlocked();
 
@@ -651,7 +635,7 @@ Value sendfrom(const Array& params, bool fHelp)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Account has insufficient funds");
 
     // Send
-    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx, false, txcomment);
+    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx);
     if (strError != "")
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
 
@@ -674,13 +658,9 @@ Value sendmany(const Array& params, bool fHelp)
         nMinDepth = params[2].get_int();
 
     CWalletTx wtx;
-    std::string strTxComment;
-
     wtx.strFromAccount = strAccount;
     if (params.size() > 3 && params[3].type() != null_type && !params[3].get_str().empty())
         wtx.mapValue["comment"] = params[3].get_str();
-    if (params.size() > 4 && params[4].type() != null_type && !params[4].get_str().empty())
-        strTxComment = params[4].get_str();
 
     set<CBitcoinAddress> setAddress;
     vector<pair<CScript, int64> > vecSend;
@@ -690,7 +670,7 @@ Value sendmany(const Array& params, bool fHelp)
     {
         CBitcoinAddress address(s.name_);
         if (!address.IsValid())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid Dirac address: ")+s.name_);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid " + FIRSTCASE_NAME + " address: ")+s.name_);
 
         if (setAddress.count(address))
             throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid parameter, duplicated address: ")+s.name_);
@@ -715,7 +695,7 @@ Value sendmany(const Array& params, bool fHelp)
     CReserveKey keyChange(pwalletMain);
     int64 nFeeRequired = 0;
     string strFailReason;
-    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, strFailReason, strTxComment);
+    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, strFailReason);
     if (!fCreated)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, strFailReason);
     if (!pwalletMain->CommitTransaction(wtx, keyChange))
@@ -784,7 +764,7 @@ Value addmultisigaddress(const Array& params, bool fHelp)
     {
         string msg = "addmultisigaddress <nrequired> <'[\"key\",\"key\"]'> [account]\n"
             "Add a nrequired-to-sign multisignature address to the wallet\"\n"
-            "each key is a Dirac address or hex-encoded public key\n"
+            "each key is a " + FIRSTCASE_NAME + " address or hex-encoded public key\n"
             "If [account] is specified, assign address to [account].";
         throw runtime_error(msg);
     }
@@ -809,7 +789,7 @@ Value createmultisig(const Array& params, bool fHelp)
         string msg = "createmultisig <nrequired> <'[\"key\",\"key\"]'>\n"
             "Creates a multi-signature address and returns a json object\n"
             "with keys:\n"
-            "address : blakecoin address\n"
+            "address : " + LOWERCASE_NAME + " address\n"
             "redeemScript : hex-encoded redemption script";
         throw runtime_error(msg);
     }
@@ -1452,7 +1432,7 @@ Value encryptwallet(const Array& params, bool fHelp)
     // slack space in .dat files; that is bad if the old data is
     // unencrypted private keys. So:
     StartShutdown();
-    return "wallet encrypted; Dirac server stopping, restart to run with encrypted wallet. The keypool has been flushed, you need to make a new backup.";
+    return "wallet encrypted; " + FIRSTCASE_NAME + " server stopping, restart to run with encrypted wallet. The keypool has been flushed, you need to make a new backup.";
 }
 
 class DescribeAddressVisitor : public boost::static_visitor<Object>
@@ -1494,8 +1474,8 @@ Value validateaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "validateaddress <blakecoinaddress>\n"
-            "Return information about <blakecoinaddress>.");
+            "validateaddress <" + LOWERCASE_NAME + "address>\n"
+            "Return information about <" + LOWERCASE_NAME + "address>.");
 
     CBitcoinAddress address(params[0].get_str());
     bool isValid = address.IsValid();

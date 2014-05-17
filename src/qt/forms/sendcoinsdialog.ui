@@ -15,36 +15,6 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayoutTxComment">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="labelTxComment">
-       <property name="text">
-        <string>Transaction &amp;comment: </string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="buddy">
-        <cstring>editTxComment</cstring>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QValidatedLineEdit" name="editTxComment" native="true">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="toolTip">
-        <string>Enter a transaction comment  (MAX 256 Characters) (Note: this information is public)</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -54,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>666</width>
-        <height>165</height>
+        <width>664</width>
+        <height>159</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -149,7 +119,7 @@
           <cursorShape>IBeamCursor</cursorShape>
          </property>
          <property name="text">
-          <string>123.456 BLC</string>
+          <string>123.456 PHO</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>

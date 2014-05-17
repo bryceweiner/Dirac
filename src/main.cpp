@@ -1,6 +1,9 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2013 The Dirac developers
+// Copyright (c) 2013-2014 The Blakecoin developers
+// Copyright (C) 2014 The Photon developers
+// Copyright (C) 2014 The BlakeBitcoin developers
+// Copyright (C) 2014 The Dirac developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,13 +14,15 @@
 #include "txdb.h"
 #include "net.h"
 #include "init.h"
+#include "auxpow.h"
 #include "ui_interface.h"
 #include "checkqueue.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+
 #include "genesis.h"
-#include "auxpow.h"
+
 
 using namespace std;
 using namespace boost;
@@ -35,13 +40,13 @@ CTxMemPool mempool;
 unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
+
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 uint256 nBestChainWork = 0;
 uint256 nBestInvalidWork = 0;
 uint256 hashBestChain = 0;
 CBlockIndex* pindexBest = NULL;
-uint256 hashGenesisBlock("");
 set<CBlockIndex*, CBlockIndexWorkComparator> setBlockIndexValid; // may contain all CBlockIndex*'s that have validness >=BLOCK_VALID_TRANSACTIONS, and must contain those who aren't failed
 int64 nTimeBestReceived = 0;
 int nScriptCheckThreads = 0;
@@ -50,9 +55,11 @@ bool fReindex = false;
 bool fBenchmark = false;
 bool fTxIndex = false;
 unsigned int nCoinCacheSize = 5000;
-int64 CTransaction::nMinTxFee = MINTXFEE;  
-int64 CTransaction::nMinRelayTxFee = MINRELAYTXFEE;
 
+/** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
+int64 CTransaction::nMinTxFee = 10000;  // Override with -mintxfee
+/** Fees smaller than this (in satoshi) are considered zero fee (for relaying) */
+int64 CTransaction::nMinRelayTxFee = 10000;
 
 CMedianFilter<int> cPeerBlockCounts(8, 0); // Amount of blocks that other nodes claim to have
 
@@ -65,7 +72,7 @@ map<uint256, set<uint256> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "Dirac Signed Message:\n";
+const string strMessageMagic = FIRSTCASE_NAME + " Signed Message:\n";
 
 double dHashesPerSec = 0.0;
 int64 nHPSTimerStart = 0;
@@ -373,9 +380,6 @@ bool CTransaction::IsStandard(string& strReason) const
         strReason = "version";
         return false;
     }
-    // Disallow large transaction comments
-    if (strTxComment.length() > MAX_TX_COMMENT_LEN)
-        return false;
 
     if (!IsFinal()) {
         strReason = "not-final";
@@ -615,7 +619,7 @@ int64 CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,
         if (nBlockSize == 1)
         {
             // Transactions under 10K are free
-            // (about 4500 BLC if made of 50 BLC inputs)
+            // (about 4500 XDQ if made of 50 XDQ inputs)
             if (nBytes < 10000)
                 nMinFee = 0;
         }
@@ -1087,43 +1091,29 @@ uint256 static GetOrphanRoot(const CBlockHeader* pblock)
     return pblock->GetHash();
 }
 
-// Deprecated by KGW
-static const int64 nTargetTimespan = 60 * 60; // 60 minutes
-static const int64 nTargetSpacing = 3 * 60; // 3 minutes
-static const int64 nInterval = nTargetTimespan / nTargetSpacing; // 20 blocks
-
 int64 static GetBlockValue(int nHeight, int64 nFees, unsigned int nBits)
 {
+    int64 nSubsidy = 8 * COIN;  // First 90 days
+    if (nHeight > 43200)        
+        nSubsidy = 1.25 * COIN;
+    if (nHeight > 744000)       // After four years
+        nSubsidy = 0.75 * COIN;
+    if (nHeight > 1448001)      // After eight years
+        nSubsidy = 0.5 * COIN;
+    if (nHeight > 2145601)      // After twelve years
+        nSubsidy = 0.25 * COIN;
+    if (nHeight > 2846401)      // After sixteen years
+        nSubsidy = 0.01 * COIN;
 
-    if (nHeight == 0)
-    {
-        return nGenesisBlockRewardCoin;
-    }
-    unsigned int basenBits = bnProofOfWorkLimit.GetCompact();
-    int nShift = int((basenBits >> 24) & 0xff) - int((nBits >> 24) & 0xff);
-    double dDiff =
-        (double)(basenBits & 0x007fffff) / (double)(nBits & 0x007fffff);
-    while (nShift > 0)
-    {
-        dDiff *= 256.0;
-        --nShift;
-    }
-    while (nShift < 0)
-    {
-        dDiff /= 256.0;
-        ++nShift;
-    }
-     int64 nSubsidy1 = int64(sqrt(dDiff * nHeight));
-     int64 nSubsidy = nSubsidy1 + nBlockRewardStartCoin;
-    
     return nSubsidy + nFees;
 }
+
+
 
 //
 // minimum amount of work that could possibly be required nTime after
 // minimum work required was nBase
 //
-
 unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
 {
     // Testnet has min-difficulty blocks
@@ -1145,7 +1135,7 @@ unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
     return bnResult.GetCompact();
 }
 
-unsigned int static GetNextWorkRequired_V1(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
+unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
     unsigned int nProofOfWorkLimit = bnProofOfWorkLimit.GetCompact();
 
@@ -1153,13 +1143,14 @@ unsigned int static GetNextWorkRequired_V1(const CBlockIndex* pindexLast, const 
     if (pindexLast == NULL)
         return nProofOfWorkLimit;
 
+    const int height = pindexLast->nHeight + 1;
     // Only change once per interval
     if ((pindexLast->nHeight+1) % nInterval != 0)
     {
         // Special difficulty rule for testnet:
         if (fTestNet)
         {
-            // If the new block's timestamp is more than 2* 10 minutes
+            // If the new block's timestamp is more than 2 * nTargetSpacing
             // then allow mining of a min-difficulty block.
             if (pblock->nTime > pindexLast->nTime + nTargetSpacing*2)
                 return nProofOfWorkLimit;
@@ -1173,24 +1164,26 @@ unsigned int static GetNextWorkRequired_V1(const CBlockIndex* pindexLast, const 
             }
         }
 
-        return pindexLast->nBits;
-    }
+       return pindexLast->nBits;
+   }
 
-    // Franko: This fixes an issue where a 51% attack can change difficulty at will.
+
+    // This fixes an issue where a 51% attack can change difficulty at will.
     // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
+    // Patch modified from Litecoin.
     int blockstogoback = nInterval-1;
-    if ((pindexLast->nHeight+1) != nInterval)
+    if (height >= 150000 && height != nInterval)
         blockstogoback = nInterval;
 
-    // Go back by what we want to be 14 days worth of blocks
+    // Go back by what we want to be nInterval blocks
     const CBlockIndex* pindexFirst = pindexLast;
     for (int i = 0; pindexFirst && i < blockstogoback; i++)
-        pindexFirst = pindexFirst->pprev;
+       pindexFirst = pindexFirst->pprev;
     assert(pindexFirst);
 
     // Limit adjustment step
     int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
-    printf(" nActualTimespan = %"PRI64d" before bounds\n", nActualTimespan);
+    printf("  nActualTimespan = %"PRI64d"  before bounds\n", nActualTimespan);
     if (nActualTimespan < nTargetTimespan/4)
         nActualTimespan = nTargetTimespan/4;
     if (nActualTimespan > nTargetTimespan*4)
@@ -1207,126 +1200,15 @@ unsigned int static GetNextWorkRequired_V1(const CBlockIndex* pindexLast, const 
 
     /// debug print
     printf("GetNextWorkRequired RETARGET\n");
-    printf("nTargetTimespan = %"PRI64d" nActualTimespan = %"PRI64d"\n", nTargetTimespan, nActualTimespan);
-    printf("Before: %08x %s\n", pindexLast->nBits, CBigNum().SetCompact(pindexLast->nBits).getuint256().ToString().c_str());
-    printf("After: %08x %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
+    printf("nTargetTimespan = %"PRI64d"    nActualTimespan = %"PRI64d"\n", nTargetTimespan, nActualTimespan);
+    printf("Before: %08x  %s\n", pindexLast->nBits, CBigNum().SetCompact(pindexLast->nBits).getuint256().ToString().c_str());
+    printf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
 
     return bnNew.GetCompact();
-}
-unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBlockHeader *pblock, uint64 TargetBlocksSpacingSeconds, uint64 PastBlocksMin, uint64 PastBlocksMax) {
-        /* current difficulty formula, megacoin - kimoto gravity well */
-        const CBlockIndex *BlockLastSolved = pindexLast;
-        const CBlockIndex *BlockReading = pindexLast;
-        const CBlockHeader *BlockCreating = pblock;
-                                                BlockCreating = BlockCreating;
-        uint64 PastBlocksMass = 0;
-        int64 PastRateActualSeconds = 0;
-        int64 PastRateTargetSeconds = 0;
-        double PastRateAdjustmentRatio = double(1);
-        CBigNum PastDifficultyAverage;
-        CBigNum PastDifficultyAveragePrev;
-        double EventHorizonDeviation;
-        double EventHorizonDeviationFast;
-        double EventHorizonDeviationSlow;
-        
-    if (BlockLastSolved == NULL || BlockLastSolved->nHeight == 0 || (uint64)BlockLastSolved->nHeight < PastBlocksMin) { return bnProofOfWorkLimit.GetCompact(); }
-        
-        for (unsigned int i = 1; BlockReading && BlockReading->nHeight > 0; i++) {
-                if (PastBlocksMax > 0 && i > PastBlocksMax) { break; }
-                PastBlocksMass++;
-                
-                if (i == 1) { PastDifficultyAverage.SetCompact(BlockReading->nBits); }
-                else { PastDifficultyAverage = ((CBigNum().SetCompact(BlockReading->nBits) - PastDifficultyAveragePrev) / i) + PastDifficultyAveragePrev; }
-                PastDifficultyAveragePrev = PastDifficultyAverage;
-                
-                PastRateActualSeconds = BlockLastSolved->GetBlockTime() - BlockReading->GetBlockTime();
-                PastRateTargetSeconds = TargetBlocksSpacingSeconds * PastBlocksMass;
-                PastRateAdjustmentRatio = double(1);
-                if (PastRateActualSeconds < 0) { PastRateActualSeconds = 0; }
-                if (PastRateActualSeconds != 0 && PastRateTargetSeconds != 0) {
-                PastRateAdjustmentRatio = double(PastRateTargetSeconds) / double(PastRateActualSeconds);
-                }
-                EventHorizonDeviation = 1 + (0.7084 * pow((double(PastBlocksMass)/double(gravitationalPull)), -1.228));
-                EventHorizonDeviationFast = EventHorizonDeviation;
-                EventHorizonDeviationSlow = 1 / EventHorizonDeviation;
-                
-                if (PastBlocksMass >= PastBlocksMin) {
-                        if ((PastRateAdjustmentRatio <= EventHorizonDeviationSlow) || (PastRateAdjustmentRatio >= EventHorizonDeviationFast)) { assert(BlockReading); break; }
-                }
-                if (BlockReading->pprev == NULL) { assert(BlockReading); break; }
-                BlockReading = BlockReading->pprev;
-        }
-        
-        CBigNum bnNew(PastDifficultyAverage);
-        if (PastRateActualSeconds != 0 && PastRateTargetSeconds != 0) {
-                bnNew *= PastRateActualSeconds;
-                bnNew /= PastRateTargetSeconds;
-        }
-    if (bnNew > bnProofOfWorkLimit) { bnNew = bnProofOfWorkLimit; }
-        
-    /// debug print
-    printf("Difficulty Retarget - Kimoto Gravity Well\n");
-    printf("PastRateAdjustmentRatio = %g\n", PastRateAdjustmentRatio);
-    printf("Before: %08x %s\n", BlockLastSolved->nBits, CBigNum().SetCompact(BlockLastSolved->nBits).getuint256().ToString().c_str());
-    printf("After: %08x %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
-        
-        return bnNew.GetCompact();
-}
-
-unsigned int static GetNextWorkRequired_V2(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
-{
-        static const int64 BlocksTargetSpacing = transationTimeTarget; // 30 seconds
-        unsigned int TimeDaySeconds = secondsInADay;
-        int64 PastSecondsMin = TimeDaySeconds * minimumGravitationalLensing;
-        int64 PastSecondsMax = TimeDaySeconds * maximumGravitationalLensing;
-        uint64 PastBlocksMin = PastSecondsMin / BlocksTargetSpacing;
-        uint64 PastBlocksMax = PastSecondsMax / BlocksTargetSpacing;
-        
-        return KimotoGravityWell(pindexLast, pblock, BlocksTargetSpacing, PastBlocksMin, PastBlocksMax);
-}
-
-unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
-{
-        int DiffMode = 1;
-        if (fTestNet) {
-                if (pindexLast->nHeight+1 >= 50) { DiffMode = 2; }
-        }
-        else {
-                if (pindexLast->nHeight+1 >= 400000) { DiffMode = 2; }
-        }
-        
-        if (DiffMode == 1) { return GetNextWorkRequired_V1(pindexLast, pblock); }
-        else if (DiffMode == 2) { return GetNextWorkRequired_V2(pindexLast, pblock); }
-        return GetNextWorkRequired_V2(pindexLast, pblock);
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 {
-    // Prevent same work from being submitted twice:
-    // - this block must have our chain ID
-    // - parent block must not have the same chain ID (see CAuxPow::Check)
-    // - index of this chain in chain merkle tree must be pre-determined (see CAuxPow::Check)
-    if (!fTestNet && nHeight != INT_MAX && GetChainID() != GetOurChainID())
-        return error("CheckProofOfWork() : block does not have our chain ID");
-
-    if (auxpow.get() != NULL)
-    {
-        if (!auxpow->Check(GetHash(), GetChainID()))
-            return error("CheckProofOfWork() : AUX POW is not valid");
-        // Check proof of work matches claimed amount
-        if (!::CheckProofOfWork(auxpow->GetParentBlockHash(), nBits))
-            return error("CheckProofOfWork() : AUX proof of work failed");
-    }
-    else
-    {
-        // Check proof of work matches claimed amount
-        if (!::CheckProofOfWork(GetHash(), nBits))
-            return error("CheckProofOfWork() : proof of work failed");
-    }
-
-/*
-
-
     CBigNum bnTarget;
     bnTarget.SetCompact(nBits);
 
@@ -1337,7 +1219,7 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits)
     // Check proof of work matches claimed amount
     if (hash > bnTarget.getuint256())
         return error("CheckProofOfWork() : hash doesn't match nBits");
-*/
+
     return true;
 }
 
@@ -1383,7 +1265,7 @@ void static InvalidChainFound(CBlockIndex* pindexNew)
 
 void static InvalidBlockFound(CBlockIndex *pindex) {
     pindex->nStatus |= BLOCK_FAILED_VALID;
-    pblocktree->WriteBlockIndex(CDiskBlockIndex(pindex));
+    pblocktree->WriteBlockIndex(*pindex);
     setBlockIndexValid.erase(pindex);
     InvalidChainFound(pindex);
     if (pindex->pnext) {
@@ -1416,7 +1298,7 @@ bool ConnectBestBlock(CValidationState &state) {
                 while (pindexTest != pindexFailed) {
                     pindexFailed->nStatus |= BLOCK_FAILED_CHILD;
                     setBlockIndexValid.erase(pindexFailed);
-                    pblocktree->WriteBlockIndex(CDiskBlockIndex(pindexFailed));
+                    pblocktree->WriteBlockIndex(*pindexFailed);
                     pindexFailed = pindexFailed->pprev;
                 }
                 InvalidChainFound(pindexNewBest);
@@ -1751,7 +1633,7 @@ void ThreadScriptCheck() {
 bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsViewCache &view, bool fJustCheck)
 {
     // Check it again in case a previous version let a bad block in
-    if (!CheckBlock(state, !fJustCheck, !fJustCheck))
+    if (!CheckBlock(state, pindex->nHeight, !fJustCheck, !fJustCheck))
         return false;
 
     // verify that the view's current state corresponds to the previous block
@@ -1882,8 +1764,7 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
 
         pindex->nStatus = (pindex->nStatus & ~BLOCK_VALID_MASK) | BLOCK_VALID_SCRIPTS;
 
-        CDiskBlockIndex blockindex(pindex);
-        if (!pblocktree->WriteBlockIndex(blockindex))
+        if (!pblocktree->WriteBlockIndex(*pindex))
             return state.Abort(_("Failed to write block index"));
     }
 
@@ -2058,7 +1939,9 @@ bool SetBestChain(CValidationState &state, CBlockIndex* pindexNew)
         const CBlockIndex* pindex = pindexBest;
         for (int i = 0; i < 100 && pindex != NULL; i++)
         {
-            if (pindex->nVersion > CBlock::CURRENT_VERSION)
+	    // high bits of the block version are used to indicate
+	    // merged mining information
+            if ((pindex->nVersion&0xff) > CBlock::CURRENT_VERSION)
                 ++nUpgraded;
             pindex = pindex->pprev;
         }
@@ -2096,7 +1979,9 @@ bool CBlock::AddToBlockIndex(CValidationState &state, const CDiskBlockPos &pos)
     map<uint256, CBlockIndex*>::iterator miPrev = mapBlockIndex.find(hashPrevBlock);
     if (miPrev != mapBlockIndex.end())
     {
-        pindexNew->pprev = (*miPrev).second;
+        // only possible if pindexNew is not the genesis block ?!?!!?
+        assert(pindexNew->phashBlock != pindexGenesisBlock->phashBlock);
+        pindexNew->pprev = (*miPrev).second;  // cacheBlockIndex assignment pprev
         pindexNew->nHeight = pindexNew->pprev->nHeight + 1;
     }
     pindexNew->nTx = vtx.size();
@@ -2111,7 +1996,6 @@ bool CBlock::AddToBlockIndex(CValidationState &state, const CDiskBlockPos &pos)
     /* write both the immutable data (CDiskBlockIndex) and the mutable data (BlockIndex) */
     if (!pblocktree->WriteDiskBlockIndex(CDiskBlockIndex(pindexNew, this->auxpow)) || !pblocktree->WriteBlockIndex(*pindexNew))
         return state.Abort(_("Failed to write block index"));
-
 
     // New best?
     if (!ConnectBestBlock(state))
@@ -2132,6 +2016,62 @@ bool CBlock::AddToBlockIndex(CValidationState &state, const CDiskBlockPos &pos)
     return true;
 }
 
+// Start accepting AUX POW at this block
+// 
+// Even if we do not accept AUX POW ourselves, we can always be the parent chain.
+ 
+int GetAuxPowStartBlock()
+{
+    if (fTestNet)
+        return 0; // Always on testnet
+    else
+        return 500000; // mainnet
+}
+
+int GetOurChainID()
+{
+    return 0x0005;
+}
+
+bool CBlockHeader::CheckProofOfWork(int nHeight) const
+{
+    if (nHeight >= GetAuxPowStartBlock())
+    {
+        // Prevent same work from being submitted twice:
+        // - this block must have our chain ID
+        // - parent block must not have the same chain ID (see CAuxPow::Check)
+        // - index of this chain in chain merkle tree must be pre-determined (see CAuxPow::Check)
+        if (!fTestNet && nHeight != INT_MAX && GetChainID() != GetOurChainID())
+            return error("CheckProofOfWork() : block does not have our chain ID");
+
+        if (auxpow.get() != NULL)
+        {
+            if (!auxpow->Check(GetHash(), GetChainID()))
+                return error("CheckProofOfWork() : AUX POW is not valid");
+            // Check proof of work matches claimed amount
+            if (!::CheckProofOfWork(auxpow->GetParentBlockHash(), nBits))
+                return error("CheckProofOfWork() : AUX proof of work failed");
+        }
+        else
+        {
+            // Check proof of work matches claimed amount
+            if (!::CheckProofOfWork(GetHash(), nBits))
+                return error("CheckProofOfWork() : proof of work failed");
+        }
+    }
+    else
+    {
+        if (auxpow.get() != NULL)
+        {
+            return true;
+        }
+
+        // Check proof of work matches claimed amount
+        if (!::CheckProofOfWork(GetHash(), nBits))
+            return error("CheckProofOfWork() : proof of work failed");
+    }
+    return true;
+}
 
 bool FindBlockPos(CValidationState &state, CDiskBlockPos &pos, unsigned int nAddSize, unsigned int nHeight, uint64 nTime, bool fKnown = false)
 {
@@ -2227,8 +2167,7 @@ bool FindUndoPos(CValidationState &state, int nFile, CDiskBlockPos &pos, unsigne
     return true;
 }
 
-
-bool CBlock::CheckBlock(CValidationState &state, bool fCheckPOW, bool fCheckMerkleRoot) const
+bool CBlock::CheckBlock(CValidationState &state, int nHeight, bool fCheckPOW, bool fCheckMerkleRoot) const
 {
     // These are checks that are independent of context
     // that can be verified before saving an orphan block.
@@ -2257,7 +2196,7 @@ bool CBlock::CheckBlock(CValidationState &state, bool fCheckPOW, bool fCheckMerk
     }
 */
     // Check proof of work matches claimed amount
-    if (fCheckPOW && !CheckProofOfWork(GetHash(), nBits))
+    if (fCheckPOW && !CheckProofOfWork(nHeight))
         return state.DoS(50, error("CheckBlock() : proof of work failed"));
 
     // Check timestamp
@@ -2288,7 +2227,7 @@ bool CBlock::CheckBlock(CValidationState &state, bool fCheckPOW, bool fCheckMerk
         uniqueTx.insert(GetTxHash(i));
     }
     if (uniqueTx.size() != vtx.size())
-        return state.DoS(100, error("CheckBlock() : duplicate transaction"));
+        return state.DoS(100, error("CheckBlock() : duplicate transaction"), true);
 
     unsigned int nSigOps = 0;
     BOOST_FOREACH(const CTransaction& tx, vtx)
@@ -2339,6 +2278,9 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
         if (!Checkpoints::CheckBlock(nHeight, hash))
             return state.DoS(100, error("AcceptBlock() : rejected by checkpoint lock-in at %d", nHeight));
 
+	// Currently doesn't enforce 2 blocks, since merged mining
+	// produces v1 blocks and normal mining should produce v2 blocks.
+#if 0
         // Reject block.nVersion=1 blocks when 95% (75% on testnet) of the network has upgraded:
 //        if (nVersion < 2)
 //        {
@@ -2349,7 +2291,7 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
 //            }
 //        }
         // Enforce block.nVersion=2 rule that the coinbase starts with serialized block height
-        if (nVersion >= 2)
+        if ((nVersion&0xff) >= 2)
         {
             // if 750 of the last 1,000 blocks are version 2 or greater (51/100 if testnet):
             if ((!fTestNet && CBlockIndex::IsSuperMajority(2, pindexPrev, 750, 1000)) ||
@@ -2361,6 +2303,7 @@ bool CBlock::AcceptBlock(CValidationState &state, CDiskBlockPos *dbp)
                     return state.DoS(100, error("AcceptBlock() : block height mismatch in coinbase"));
             }
         }
+#endif
     }
 
     // Write block to history file
@@ -2398,7 +2341,7 @@ bool CBlockIndex::IsSuperMajority(int minVersion, const CBlockIndex* pstart, uns
     unsigned int nFound = 0;
     for (unsigned int i = 0; i < nToCheck && nFound < nRequired && pstart != NULL; i++)
     {
-        if (pstart->nVersion >= minVersion)
+        if ((pstart->nVersion&0xff) >= minVersion)
             ++nFound;
         pstart = pstart->pprev;
     }
@@ -2415,7 +2358,7 @@ bool ProcessBlock(CValidationState &state, CNode* pfrom, CBlock* pblock, CDiskBl
         return state.Invalid(error("ProcessBlock() : already have block (orphan) %s", hash.ToString().c_str()));
 
     // Preliminary checks
-    if (!pblock->CheckBlock(state))
+    if (!pblock->CheckBlock(state, INT_MAX))
         return error("ProcessBlock() : CheckBlock FAILED");
 
     CBlockIndex* pcheckpoint = Checkpoints::GetLastCheckpoint(mapBlockIndex);
@@ -2808,7 +2751,7 @@ bool VerifyDB() {
         if (!block.ReadFromDisk(pindex))
             return error("VerifyDB() : *** block.ReadFromDisk failed at %d, hash=%s", pindex->nHeight, pindex->GetBlockHash().ToString().c_str());
         // check level 1: verify block validity
-        if (nCheckLevel >= 1 && !block.CheckBlock(state))
+        if (nCheckLevel >= 1 && !block.CheckBlock(state, pindex->nHeight))
             return error("VerifyDB() : *** found bad block at %d, hash=%s\n", pindex->nHeight, pindex->GetBlockHash().ToString().c_str());
         // check level 2: verify undo validity
         if (nCheckLevel >= 2 && pindex) {
@@ -2870,13 +2813,8 @@ bool LoadBlockIndex()
 {
     if (fTestNet)
     {
-        pchMessageStart[0] = pchMessageStartTestNet[0];
-        pchMessageStart[1] = pchMessageStartTestNet[1];
-        pchMessageStart[2] = pchMessageStartTestNet[2];
-        pchMessageStart[3] = pchMessageStartTestNet[3];
-        hashGenesisBlock = hashGenesisBlockTestNet;
-    } else {
-        hashGenesisBlock = hashGenesisBlockMainNet;
+        pchMessageStart = pchTestNetMessageStart;
+        hashGenesisBlock = hashTestNetGenesisBlock;
     }
 
     //
@@ -2918,30 +2856,30 @@ bool InitBlockIndex() {
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 112;
-        block.nTime    = timeGenesisBlockMainNet;
+        block.nTime    = timeGenesisBlock;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = nMainNonce;
+        block.nNonce   = GENESIS_NONCE;
 
         if (fTestNet)
         {
-            block.nTime    = timeGenesisBlockTestNet;
-            block.nNonce   = nTestNonce;
+            block.nTime    = timeTestNetGenesisBlock;
+            block.nNonce   = TESTNET_GENESIS_NONCE;
         }
 
         //// debug print
         uint256 hash = block.GetHash();
         while (hash > bnProofOfWorkLimit.getuint256()){
-            if (++block.nNonce==0) break;
+            if (++genesis.nNonce==0) break;
             hash = block.GetHash();
         }
 
         printf("%s\n", hash.ToString().c_str());
-        printf("%s\n", hashGenesisBlock.ToString().c_str());
         printf("%s\n", block.hashMerkleRoot.ToString().c_str());
+        printf("%x\n", bnProofOfWorkLimit.GetCompact());
         block.print();
-        assert(block.hashMerkleRoot == hashMerkleRootMainNet);
-        assert(hash == hashGenesisBlock);
 
+        assert(block.hashMerkleRoot == MERKLE_ROOT);
+        assert(hash == hashGenesisBlock);
         // Start new block file
         try {
             unsigned int nBlockSize = ::GetSerializeSize(block, SER_DISK, CLIENT_VERSION);
@@ -3106,11 +3044,12 @@ bool LoadExternalBlockFile(FILE* fileIn, CDiskBlockPos *dbp)
 }
 
 
-// The message start string is designed to be unlikely to occur in normal data.
-// The characters are rarely used upper ASCII, not valid as UTF-8, and produce
-// a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { pchMessageStartMainNet[0], pchMessageStartMainNet[1],
-                                     pchMessageStartMainNet[2], pchMessageStartMainNet[3] };
+
+
+
+
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -3203,6 +3142,11 @@ bool static AlreadyHave(const CInv& inv)
     // Don't know what it is, just say we already got one
     return true;
 }
+
+
+
+
+
 
 void static ProcessGetData(CNode* pfrom)
 {
@@ -4670,7 +4614,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
             return error("AUX POW parent hash %s is not under target %s", auxpow->GetParentBlockHash().GetHex().c_str(), hashTarget.GetHex().c_str());
 
         //// debug print
-        printf("DiracMiner:\n");
+        printf("%sMiner:\n", FIRSTCASE_NAME);
         printf("AUX proof-of-work found  \n     our hash: %s   \n  parent hash: %s  \n       target: %s\n",
                 hash.GetHex().c_str(),
                 auxpow->GetParentBlockHash().GetHex().c_str(),
@@ -4678,22 +4622,23 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     }
     else
     {
-
         if (hash > hashTarget)
             return false;
-    
+
         //// debug print
-        printf("DiracMiner:\n");
+        printf("%sMiner:\n", FIRSTCASE_NAME);
         printf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
-        pblock->print();
-        printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
     }
+ 
+    //// debug print
+    pblock->print();
+    printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
 
     // Found a solution
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != hashBestChain)
-            return error("DiracMiner : generated block is stale");
+            return error(FIRSTCASE_NAME + "Miner : generated block is stale");
 
         // Remove key from key pool
         reservekey.KeepKey();
@@ -4707,7 +4652,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         // Process this block the same as if we had received it from another node
         CValidationState state;
         if (!ProcessBlock(state, NULL, pblock))
-            return error("DiracMiner : ProcessBlock, block not accepted");
+            return error(FIRSTCASE_NAME + "Miner : ProcessBlock, block not accepted");
     }
 
     return true;
@@ -4715,9 +4660,9 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
 
 void static BitcoinMiner(CWallet *pwallet)
 {
-    printf("DiracMiner started\n");
+    printf("%sMiner started\n", FIRSTCASE_NAME);
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("dirac-miner");
+    RenameThread(LOWERCASE_NAME + "-miner");
 
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
@@ -4739,40 +4684,14 @@ void static BitcoinMiner(CWallet *pwallet)
         CBlock *pblock = &pblocktemplate->block;
         IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-        printf("Running DiracMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
+        printf("Running %sMiner with %"PRIszu" transactions in block (%u bytes)\n", FIRSTCASE_NAME, pblock->vtx.size(),
                ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
-        //
-        // Pre-build hash buffers
-        //
-/*
-        char pmidstatebuf[32+16]; char* pmidstate = alignup<16>(pmidstatebuf);
-        char pdatabuf[128+16];    char* pdata     = alignup<16>(pdatabuf);
-        char phash1buf[64+16];    char* phash1    = alignup<16>(phash1buf);
-
-        FormatHashBuffers(pblock, pmidstate, pdata, phash1);
-
-        unsigned int& nBlockTime = *(unsigned int*)(pdata + 64 + 4);
-        unsigned int& nBlockBits = *(unsigned int*)(pdata + 64 + 8);
-        unsigned int& nBlockNonce = *(unsigned int*)(pdata + 64 + 12);
-
-        
-        //
-        // Search
-        //
-
-        int64 nStart = GetTime();
-        uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
-        uint256 hashbuf[2];
-        uint256& hash = *alignup<16>(hashbuf);
-*/
         uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
         int64 nStart = GetTime();
         uint256 hash;
-        // unsigned int nHashesDone = 0;
         loop
         {
-//            unsigned int nNonceFound;
 
             hash = pblock->GetHash();
             if (hash <= hashTarget){
@@ -4842,7 +4761,7 @@ void static BitcoinMiner(CWallet *pwallet)
     } }
     catch (boost::thread_interrupted)
     {
-        printf("DiracMiner terminated\n");
+        printf("%sMiner terminated\n", FIRSTCASE_NAME);
         throw;
     }
 }
@@ -4868,6 +4787,56 @@ void GenerateBitcoins(bool fGenerate, CWallet* pwallet)
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
         minerThreads->create_thread(boost::bind(&BitcoinMiner, pwallet));
+}
+
+bool CDiskBlockIndex::CheckIndex() const
+{
+    if (nVersion & BLOCK_VERSION_AUXPOW)
+        return CheckProofOfWork(auxpow->GetParentBlockHash(), nBits);
+    else
+        return CheckProofOfWork(GetBlockHash(), nBits);
+}
+
+std::string CBlockIndex::ToString() const
+{
+    return strprintf("CBlockIndex(pprev=%p, pnext=%p, nHeight=%d, merkle=%s, hashBlock=%s)",
+            pprev, pnext, nHeight,
+            hashMerkleRoot.ToString().substr(0,10).c_str(),
+            GetBlockHash().ToString().c_str());
+}
+
+std::string CDiskBlockIndex::ToString() const
+{
+    std::string str = "CDiskBlockIndex(";
+    str += CBlockIndex::ToString();
+    str += strprintf("\n                hashBlock=%s, hashPrev=%s, hashParentBlock=%s)",
+        GetBlockHash().ToString().c_str(),
+        hashPrev.ToString().c_str(),
+        (auxpow.get() != NULL) ? auxpow->GetParentBlockHash().ToString().substr(0,20).c_str() : "-");
+    return str;
+}         
+
+CBlockHeader CBlockIndex::GetBlockHeader() const
+{
+    CBlockHeader block;
+  
+    if (nVersion & BLOCK_VERSION_AUXPOW) {
+        CDiskBlockIndex diskblockindex;
+        // auxpow is not in memory, load CDiskBlockHeader
+        // from database to get it
+  
+        pblocktree->ReadDiskBlockIndex(*phashBlock, diskblockindex);
+        block.auxpow = diskblockindex.auxpow;
+    }
+
+    block.nVersion       = nVersion;
+    if (pprev)
+        block.hashPrevBlock = pprev->GetBlockHash();
+    block.hashMerkleRoot = hashMerkleRoot;
+    block.nTime          = nTime;
+    block.nBits          = nBits;
+    block.nNonce         = nNonce;
+    return block;
 }
 
 // Amount compression:

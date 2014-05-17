@@ -29,7 +29,7 @@
  *
  * @author   Thomas Pornin <thomas.pornin@cryptolog.com>
  *
- * Modified for more speed by BlueDragon747 for the Dirac project
+ * Modified for more speed by BlueDragon747 for the The Blake Coin project and the Photon Developers 
  */
 
 #include <stddef.h>

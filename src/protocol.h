@@ -14,12 +14,11 @@
 #include "netbase.h"
 #include <string>
 #include "uint256.h"
-#include "clone.h"
 
 extern bool fTestNet;
 static inline unsigned short GetDefaultPort(const bool testnet = fTestNet)
 {
-    return testnet ? TEST_DEFAULTPORT : MAIN_DEFAULTPORT;
+    return testnet ? 18112 : 356;
 }
 
 

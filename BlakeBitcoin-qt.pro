@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = blakecoin-qt
+TARGET = dirac-qt
 macx:TARGET = "Dirac-Qt"
 VERSION = 0.8.9
 INCLUDEPATH += src src/json src/qt
@@ -18,16 +18,16 @@ CONFIG += thread
 #    BOOST_INCLUDE_PATH, BOOST_LIB_PATH, BDB_INCLUDE_PATH,
 #    BDB_LIB_PATH, OPENSSL_INCLUDE_PATH and OPENSSL_LIB_PATH respectively
 
-#BOOST_LIB_SUFFIX=-mgw46-mt-sd-1_54
-#BOOST_INCLUDE_PATH=C:\deps\boost_1_54_0
-#BOOST_LIB_PATH=C:\deps\boost_1_54_0\stage\lib
-#BDB_INCLUDE_PATH=C:\deps\db-4.8.30.NC\build_unix
-#BDB_LIB_PATH=C:\deps\db-4.8.30.NC\build_unix
-#OPENSSL_INCLUDE_PATH=C:\deps\openssl-1.0.1e\include
-#OPENSSL_LIB_PATH=C:\deps\openssl-1.0.1e
-#MINIUPNPC_LIB_SUFFIX=-miniupnpc
-#MINIUPNPC_INCLUDE_PATH=C:\deps\miniupnpc
-#MINIUPNPC_LIB_PATH=C:\deps\miniupnpc
+BOOST_LIB_SUFFIX=-mgw46-mt-sd-1_55
+BOOST_INCLUDE_PATH=C:\deps\boost_1_55_0
+BOOST_LIB_PATH=C:\deps\boost_1_55_0\stage\lib
+BDB_INCLUDE_PATH=C:\deps\db-4.8.30.NC\build_unix
+BDB_LIB_PATH=C:\deps\db-4.8.30.NC\build_unix
+OPENSSL_INCLUDE_PATH=C:\deps\openssl-1.0.1g\include
+OPENSSL_LIB_PATH=C:\deps\openssl-1.0.1g
+MINIUPNPC_LIB_SUFFIX=-miniupnpc
+MINIUPNPC_INCLUDE_PATH=C:\deps\miniupnpc
+MINIUPNPC_LIB_PATH=C:\deps\miniupnpc
 
 OBJECTS_DIR = build
 MOC_DIR = build
@@ -153,6 +153,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/qt/aboutdialog.h \
     src/qt/editaddressdialog.h \
     src/qt/bitcoinaddressvalidator.h \
+    src/auxpow.h \
     src/alert.h \
     src/addrman.h \
     src/base58.h \
@@ -174,7 +175,6 @@ HEADERS += src/qt/bitcoingui.h \
     src/bloom.h \
     src/mruset.h \
     src/checkqueue.h \
-    src/auxpow.h \
     src/json/json_spirit_writer_template.h \
     src/json/json_spirit_writer.h \
     src/json/json_spirit_value.h \
@@ -238,6 +238,7 @@ SOURCES += src/qt/bitcoin.cpp \
     src/qt/aboutdialog.cpp \
     src/qt/editaddressdialog.cpp \
     src/qt/bitcoinaddressvalidator.cpp \
+    src/auxpow.cpp \
     src/alert.cpp \
     src/version.cpp \
     src/sync.cpp \
@@ -253,7 +254,6 @@ SOURCES += src/qt/bitcoin.cpp \
     src/checkpoints.cpp \
     src/addrman.cpp \
     src/db.cpp \
-    src/auxpow.cpp \
     src/walletdb.cpp \
     src/qt/clientmodel.cpp \
     src/qt/guiutil.cpp \
@@ -360,7 +360,7 @@ OTHER_FILES += README.md \
 # platform specific defaults, if not overridden on command line
 isEmpty(BOOST_LIB_SUFFIX) {
     macx:BOOST_LIB_SUFFIX = -mt
-    win32:BOOST_LIB_SUFFIX = -mgw44-mt-s-1_50
+    win32:BOOST_LIB_SUFFIX = -mgw44-mt-s-1_55
 }
 
 isEmpty(BOOST_THREAD_LIB_SUFFIX) {

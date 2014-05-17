@@ -21,23 +21,23 @@ USE_UPNP:=-
 USE_IPV6:=1
 
 DEPSDIR?=/usr/local
-BOOST_SUFFIX?=-mgw46-mt-sd-1_54
+BOOST_SUFFIX?=-mgw46-mt-sd-1_55
 
 INCLUDEPATHS= \
  -I"$(CURDIR)" \
  -I"$(DEPSDIR)/include" \
- -I"c:/deps/boost_1_54_0" \
+ -I"c:/deps/boost_1_55_0" \
  -I"c:/deps/db-4.8.30.NC/build_unix" \
  -I"c:/deps/miniupnpc" \
- -I"c:/deps/openssl-1.0.1e/include"
+ -I"c:/deps/openssl-1.0.1g/include"
 
 LIBPATHS= \
  -L"$(CURDIR)/leveldb" \
  -L"$(DEPSDIR)/lib" \
- -L"c:/deps/boost_1_54_0/stage/lib" \
+ -L"c:/deps/boost_1_55_0/stage/lib" \
  -L"c:/deps/db-4.8.30.NC/build_unix" \
  -L"c:/deps/miniupnpc" \
- -L"c:/deps/openssl-1.0.1e"
+ -L"c:/deps/openssl-1.0.1g"
 
 LIBS= \
  -l leveldb \
@@ -78,8 +78,8 @@ HEADERS = $(wildcard *.h)
 
 OBJS= \
     leveldb/libleveldb.a \
-    obj/alert.o \
     obj/auxpow.o \
+    obj/alert.o \
     obj/version.o \
     obj/checkpoints.o \
     obj/netbase.o \
@@ -112,9 +112,9 @@ OBJS= \
     obj/blake.o
 
 
-all: blakecoind.exe
+all: diracd.exe
 
-test check: test_blakecoin.exe FORCE
+test check: test_dirac  .exe FORCE
 	test_bitcoin.exe
 
 #
@@ -132,7 +132,7 @@ obj/%.o: %.cpp $(HEADERS)
 obj/%.o: %.c $(HEADERS)
 	$(CXX) -c $(xCXXFLAGS) -fpermissive -o $@ $<
 
-blakecoind.exe: $(OBJS:obj/%=obj/%)
+diracd.exe: $(OBJS:obj/%=obj/%)
 	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS)
 
 TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
@@ -140,11 +140,11 @@ TESTOBJS := $(patsubst test/%.cpp,obj-test/%.o,$(wildcard test/*.cpp))
 obj-test/%.o: test/%.cpp $(HEADERS)
 	$(CXX) -c $(TESTDEFS) $(CFLAGS) -o $@ $<
 
-test_blakecoin.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
+test_dirac.exe: $(TESTOBJS) $(filter-out obj/init.o,$(OBJS:obj/%=obj/%))
 	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ -lboost_unit_test_framework$(BOOST_SUFFIX) $(LIBS)
 
 clean:
-	rm -f blakecoind.exe test_blakecoin.exe
+	rm -f diracd.exe test_dirac.exe
 	rm -f obj/*
 	rm -f obj-test/*
 	cd leveldb && $(MAKE) TARGET_OS=NATIVE_WINDOWS clean && cd ..
