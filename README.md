@@ -45,9 +45,6 @@ Dirac has a specially modified codebase which allows for a process of currency c
  * Third reward reduction @ 1448001) : Ð0.5 
  * Fourth reward reduction @ 2145601 : Ð0.25 
  * Fifth reward reduction (inflation mode) @ 2846401 : Ð0.01 
- * GPU Mining: Yes.
- * FPGA Mining: Yes.
- * ASIC Mining : *NO*
 
 Useful Information
 -------------------
@@ -61,6 +58,9 @@ __Official Blake Ecosystem Merged Mining Pool__
 * US East: [http://ny2.blakecoin.com/](http://ny2.blakecoin.com/)
 * US West: [http://la1.blakecoin.com/](http://la1.blakecoin.com/)
 * Europe: [http://eu3.blakecoin.com](http://eu3.blakecoin.com)
+ * GPU Mining: Yes.
+ * FPGA Mining: Yes.
+ * ASIC Mining : __*NO*__
 
 __Official Dirac Exchange (Blake Ecosystem Present)__
 * [http://allcrypt.com](http://allcrypt.com)
