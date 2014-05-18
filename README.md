@@ -41,7 +41,7 @@ Dirac is intented not simply as a currency, but as a stable financial instrument
 ISO 4217 Trading Symbol: XDQ
 Monetary Symbol: Ð
 Target block time: 180 seconds
-Difficulty retarget: every block
+Difficulty retarget: 2,016 blocks (roughly every 4 days)
 Starting block reward: Ð8
 First reward reduction @ 43201: Ð1.25
 Second reward reduction @ 744001: Ð0.75
