@@ -16,7 +16,7 @@ static const char* FIRSTCASE_NAME = "Dirac";
 static const char* ISO4217_TRADING_SYMBOL = "XDQ";
 static const char* WEBSITE = "dirac.io";
 static const char* MONETARY_SYMBOL = "Ð";
-static const char* MONETARY_SYMBOL_ASCII = "208";
+static const char* MONETARY_SYMBOL_ASCII = "0208";
 
 // Ports
 const int MAINNET_RPC_PORT = 42024;
