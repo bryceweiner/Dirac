@@ -41,7 +41,7 @@ Dirac has a specially modified codebase which allows for a process of currency c
 * ISO 4217 Trading Symbol : XDQ
 * Monetary Symbol : Ð 
 * Target block time : 180 seconds 
-* Difficulty retarget : 2,016 blocks (roughly every 4 days) 
+* Difficulty retarget : 20 blocks (once an hour) 
 * Maximum Coins: Ð2,272,800
 * Starting block reward : Ð8 
  * First reward reduction @ 43201 : Ð1.25 
