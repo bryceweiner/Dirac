@@ -31,7 +31,10 @@ __*What is Dirac?*__
 ====================
 A Revolution In Cryptocurrency and Finance
 ---------------------------------------
-Dirac is intented not simply as a currency, but as a stable financial instrument capable of carrying vast amounts of wealth in a safe, secure, and in a manner more economically efficient than Bitcoin.  Free-market managed economic stability is a concept introduced by NautilusCoin and then enhanced by Dirac.  Dirac will be traded in an exclusive currency pairing against NautilusCoin (NAUT market) on [AllCrypt](http://AllCrypt.com).
+![Dirac](http://i58.tinypic.com/29osrnk.jpg "Dirac")
+>"As Dirac was to Einstein, so now Dirac is to Bitcoin."
+
+Dirac is intented not simply as a currency, but as a stable financial instrument capable of carrying vast amounts of wealth in a safe, secure, and in a manner more economically efficient than Bitcoin.  Free-market managed economic stability is a concept introduced by [NautilusCoin](http://NautilusCoin.com) and then enhanced by Dirac.  Dirac will be traded in an exclusive currency pairing against NautilusCoin (NAUT market) on [AllCrypt](http://AllCrypt.com). Between 90 and 100 days after launch, the market will be gradually purchased at fair market value for 25,000NAUT over a period of 30 days, backing the currency network and fixing the price at that moment at roughly 0.07NAUT.
 
 Dirac has a specially modified codebase which allows for a process of currency cloning that is simpler than ever before. Thousands of clones can now be created and each blockchain comes pre-built with merged mining.
 
@@ -39,6 +42,7 @@ Dirac has a specially modified codebase which allows for a process of currency c
 * Monetary Symbol : Ð 
 * Target block time : 180 seconds 
 * Difficulty retarget : 2,016 blocks (roughly every 4 days) 
+* Maximum Coins: Ð2,272,800
 * Starting block reward : Ð8 
  * First reward reduction @ 43201 : Ð1.25 
  * Second reward reduction @ 744001 : Ð0.75 
@@ -61,6 +65,14 @@ __Official Blake Ecosystem Merged Mining Pool__
  * GPU Mining: Yes.
  * FPGA Mining: Yes.
  * ASIC Mining : __*NO*__
+
+__Blake-256 optimization thread on CUDAMiners__
+* [http://www.cudaminers.net/forum/settings-benchmarks-for-blake-256-merged-mining-thread.html](http://www.cudaminers.net/forum/settings-benchmarks-for-blake-256-merged-mining-thread.html)
+started by @cuttlefish_btc 
+
+__Real world example of 280X Settings at 2.4Gh/s__
+
+![Technically Superior](https://pbs.twimg.com/media/Bn4z2w7CMAA_gUf.png "Technically Superior")
 
 __Official Dirac Exchange (Blake Ecosystem Present)__
 * [http://allcrypt.com](http://allcrypt.com)
