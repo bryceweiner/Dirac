@@ -52,24 +52,24 @@ Dirac has a specially modified codebase which allows for a process of currency c
 Useful Information
 -------------------
 __Official Blake Ecosystem Mining Information and Discussion Thread__
-[https://bitcointalk.org/index.php?topic=306894.0](https://bitcointalk.org/index.php?topic=306894.0)
+* [https://bitcointalk.org/index.php?topic=306894.0](https://bitcointalk.org/index.php?topic=306894.0)
 
 __Official Blake Ecosystem Website__
-[http://www.blakecoin.org](http://www.blakecoin.org)
+* [http://www.blakecoin.org](http://www.blakecoin.org)
 
 __Official Blake Ecosystem Merged Mining Pool__
-US East: [http://ny2.blakecoin.com/](http://ny2.blakecoin.com/)
-US West: [http://la1.blakecoin.com/](http://la1.blakecoin.com/)
-Europe: [http://eu3.blakecoin.com](http://eu3.blakecoin.com)
+* US East: [http://ny2.blakecoin.com/](http://ny2.blakecoin.com/)
+* US West: [http://la1.blakecoin.com/](http://la1.blakecoin.com/)
+* Europe: [http://eu3.blakecoin.com](http://eu3.blakecoin.com)
 
 __Official Dirac Exchange (Blake Ecosystem Present)__
-[http://allcrypt.com](http://allcrypt.com)
+* [http://allcrypt.com](http://allcrypt.com)
 
 __What Is Merged Mining?__
-[http://bitcoin.stackexchange.com/questions/273/how-does-merged-mining-work](http://bitcoin.stackexchange.com/questions/273/how-does-merged-mining-work)
+* [http://bitcoin.stackexchange.com/questions/273/how-does-merged-mining-work](http://bitcoin.stackexchange.com/questions/273/how-does-merged-mining-work)
 
 __The Science of the Blake Advantage Over Bitcoin__
-[https://131002.net/blake/blake.pdf](https://131002.net/blake/blake.pdf)
+* [https://131002.net/blake/blake.pdf](https://131002.net/blake/blake.pdf)
 
 __License__
 
