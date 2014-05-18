@@ -2868,10 +2868,6 @@ bool InitBlockIndex() {
 
         //// debug print
         uint256 hash = block.GetHash();
-        while (hash > bnProofOfWorkLimit.getuint256()){
-            if (++block.nNonce==0) break;
-            hash = block.GetHash();
-        }
 
         printf("%s\n", hash.ToString().c_str());
         printf("%s\n", block.hashMerkleRoot.ToString().c_str());
