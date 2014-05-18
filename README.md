@@ -38,16 +38,18 @@ What is Dirac?
 
 Dirac is intented not simply as a currency, but as a stable financial instrument capable of carrying vast amounts of wealth in a safe, secure, and in a manner more economically efficient than Bitcoin.  Free-market managed economic stability is a concept introduced by NautilusCoin and then enhanced by Dirac.
 
-ISO 4217 Trading Symbol: XDQ
-Monetary Symbol: Ð
-Target block time: 180 seconds
-Difficulty retarget: 2,016 blocks (roughly every 4 days)
-Starting block reward: Ð8
-First reward reduction @ 43201: Ð1.25
-Second reward reduction @ 744001: Ð0.75
-Third reward reduction @ 1448001): Ð0.5
-Fourth reward reduction @ 2145601: Ð0.25
-Fifth reward reduction (inflation mode) @ 2846401: Ð0.01
+| | |
+|-|-|
+|ISO 4217 Trading Symbol | XDQ |
+|Monetary Symbol | Ð |
+|Target block time | 180 seconds |
+|Difficulty retarget | 2,016 blocks (roughly every 4 days) |
+|Starting block reward | Ð8 |
+|First reward reduction @ 43201 | Ð1.25 |
+|Second reward reduction @ 744001 | Ð0.75 |
+|Third reward reduction @ 1448001) | Ð0.5 |
+|Fourth reward reduction @ 2145601 | Ð0.25 |
+|Fifth reward reduction (inflation mode) @ 2846401 | Ð0.01 |
 
 Ubuntu 12.04 dependancies that are used on the Linux build machine:
 
