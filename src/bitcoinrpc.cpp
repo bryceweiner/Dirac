@@ -45,7 +45,7 @@ static boost::thread_group* rpc_worker_group = NULL;
 
 static inline unsigned short GetDefaultRPCPort()
 {
-    return GetBoolArg("-testnet", false) ?  1812: 243;
+    return GetBoolArg("-testnet", false) ?  MAINNET_RPC_PORT: TESTNET_RPC_PORT;
 }
 
 Object JSONRPCError(int code, const string& message)
@@ -181,14 +181,17 @@ Value help(const Array& params, bool fHelp)
 
 Value stop(const Array& params, bool fHelp)
 {
+    char abc[100];
+    strcpy(abc, "Stop\n");
+    strcat(abc, FIRSTCASE_NAME);
+    strcat(abc," server stopping.");
     // Accept the deprecated and ignored 'detach' boolean argument
     if (fHelp || params.size() > 1)
         throw runtime_error(
-            "stop\n"
-            "Stop " + FIRSTCASE_NAME + " server.");
+            abc);
     // Shutdown will take long enough that the response should get back
     StartShutdown();
-    return FIRSTCASE_NAME + " server stopping";
+    return abc;
 }
 
 
@@ -743,7 +746,12 @@ void StartRPCThreads()
     {
         unsigned char rand_pwd[32];
         RAND_bytes(rand_pwd, 32);
-        string strWhatAmI = "To use " + LOWERCASE_NAME + "d";
+        char abc[100];
+        strcpy(abc, "To use");
+        strcat(abc, LOWERCASE_NAME);
+        strcat(abc,"d");
+
+        string strWhatAmI = abc;
         if (mapArgs.count("-server"))
             strWhatAmI = strprintf(_("To use the %s option"), "\"-server\"");
         else if (mapArgs.count("-daemon"))
@@ -762,9 +770,9 @@ void StartRPCThreads()
                 strWhatAmI.c_str(),
                 GetConfigFile().string().c_str(),
                 LOWERCASE_NAME,
-                EncodeBase58(&rand_pwd[0],&rand_pwd[0]+32).c_str()),
-                "", CClientUIInterface::MSG_ERROR,
-                FIRSTCASE_NAME);
+                EncodeBase58(&rand_pwd[0],&rand_pwd[0]+32).c_str(),
+                FIRSTCASE_NAME),
+                "", CClientUIInterface::MSG_ERROR);
         StartShutdown();
         return;
     }

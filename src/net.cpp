@@ -9,7 +9,7 @@
 #include "addrman.h"
 #include "ui_interface.h"
 #include "script.h"
-#include "clone.h"
+
 #ifdef WIN32
 #include <string.h>
 #endif

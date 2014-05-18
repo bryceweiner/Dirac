@@ -22,7 +22,6 @@
 #include "key.h"
 #include "script.h"
 #include "allocators.h"
-#include "clone.h"
 
 static const char* pszBase58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 

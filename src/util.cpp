@@ -20,7 +20,7 @@
 #include "sync.h"
 #include "version.h"
 #include "ui_interface.h"
-#include "clone.h"
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
 #include <boost/algorithm/string/predicate.hpp> // for startswith() and endswith()
@@ -1055,7 +1055,10 @@ boost::filesystem::path GetDefaultDataDir()
     return pathRet / FIRSTCASE_NAME;
 #else
     // Unix
-    return pathRet / ("." + LOWERCASE_NAME);
+    char abc[100];
+    strcpy(abc,".");
+    strcat(abc, LOWERCASE_NAME);
+    return pathRet / abc;
 #endif
 #endif
 }
@@ -1096,7 +1099,10 @@ const boost::filesystem::path &GetDataDir(bool fNetSpecific)
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", LOWERCASE_NAME + ".conf"));
+    char abc[100];
+    strcpy(abc,LOWERCASE_NAME);
+    strcat(abc,".conf");
+    boost::filesystem::path pathConfigFile(GetArg("-conf",abc));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
     return pathConfigFile;
 }
@@ -1130,7 +1136,11 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", LOWERCASE_NAME + "d.pid"));
+    char abc[100];
+    strcpy(abc,LOWERCASE_NAME);
+    strcat(abc,"d.pid");
+
+    boost::filesystem::path pathPidFile(GetArg("-pid", abc));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1359,7 +1369,7 @@ void AddTimeData(const CNetAddr& ip, int64 nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong " + FIRSTCASE_NAME + " will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong the network will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
                     uiInterface.ThreadSafeMessageBox(strMessage, "", CClientUIInterface::MSG_WARNING);

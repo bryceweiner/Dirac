@@ -11,7 +11,6 @@
 #include "init.h"
 #include "util.h"
 #include "ui_interface.h"
-#include "clone.h"
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -176,7 +175,7 @@ bool AppInit(int argc, char* argv[])
         if (mapArgs.count("-?") || mapArgs.count("--help"))
         {
             // First part of help message is specific to diracd / RPC client
-            std::string strUsage = _(FIRSCASE_NAME + " version") + " " + FormatFullVersion() + "\n\n" +
+            std::string strUsage = _("Dirac version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
                   "  " + LOWERCASE_NAME + "d [options]                     " + "\n" +
                   "  " + LOWERCASE_NAME + "d [options] <command> [params]  " + _("Send command to -server or photond") + "\n" +
@@ -191,7 +190,7 @@ bool AppInit(int argc, char* argv[])
 
         // Command-line RPC
         for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], LOWERCASE_NAME + ":"))
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "dirac:"))
                 fCommandLine = true;
 
         if (fCommandLine)
@@ -294,7 +293,7 @@ std::string HelpMessage()
 {
     string strUsage = _("Options:") + "\n" +
         "  -?                     " + _("This help message") + "\n" +
-        "  -conf=<file>           " + _("Specify configuration file (default: " + LOWERCASE_NAME + ".conf)") + "\n" +
+        "  -conf=<file>           " + _("Specify configuration file (default: dirac.conf)") + "\n" +
         "  -pid=<file>            " + _("Specify pid file (default: bitcoind.pid)") + "\n" +
         "  -gen                   " + _("Generate coins (default: 0)") + "\n" +
         "  -datadir=<dir>         " + _("Specify data directory") + "\n" +
@@ -629,7 +628,7 @@ bool AppInit2(boost::thread_group& threadGroup)
     if (file) fclose(file);
     static boost::interprocess::file_lock lock(pathLockFile.string().c_str());
     if (!lock.try_lock())
-        return InitError(strprintf(_("Cannot obtain a lock on data directory %s. %s already running."), strDataDir.c_str()), FIRSTCASE_NAME);
+        return InitError(strprintf(_("Cannot obtain a lock on data directory %s. Dirac already running."), strDataDir.c_str()));
 
     if (GetBoolArg("-shrinkdebugfile", !fDebug))
         ShrinkDebugFile();
@@ -644,7 +643,7 @@ bool AppInit2(boost::thread_group& threadGroup)
     std::ostringstream strErrors;
 
     if (fDaemon)
-        fprintf(stdout, FIRSTCASE_NAME + " server starting\n");
+        fprintf(stdout, "%s server starting\n", FIRSTCASE_NAME);
 
     if (nScriptCheckThreads) {
         printf("Using %u threads for script verification\n", nScriptCheckThreads);
@@ -966,10 +965,10 @@ bool AppInit2(boost::thread_group& threadGroup)
             InitWarning(msg);
         }
         else if (nLoadWalletRet == DB_TOO_NEW)
-            strErrors << _("Error loading wallet.dat: Wallet requires newer version of " + FIRSTCASE_NAME) << "\n";
+            strErrors << _("Error loading wallet.dat: Wallet requires newer version of ") << FIRSTCASE_NAME << "\n";
         else if (nLoadWalletRet == DB_NEED_REWRITE)
         {
-            strErrors << _("Wallet needed to be rewritten: restart " + FIRSTCASE_NAME + " to complete") << "\n";
+            strErrors << _("Wallet needed to be rewritten: restart ") << FIRSTCASE_NAME << _(" to complete") << "\n";
             printf("%s", strErrors.str().c_str());
             return InitError(strErrors.str());
         }

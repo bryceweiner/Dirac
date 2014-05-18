@@ -35,7 +35,7 @@ QString BitcoinUnits::name(int unit)
     switch(unit)
     {
     case B: return QString(MONETARY_SYMBOL_ASCII);
-    case mB: return QString("m" + MONETARY_SYMBOL_ASCII);
+    case mB: return QString("m" + "\u" + MONETARY_SYMBOL_ASCII);
     case uB: return QString::fromUtf8("μ" + MONETARY_SYMBOL_ASCII);
     default: return QString("???");
     }

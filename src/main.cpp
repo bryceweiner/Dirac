@@ -72,7 +72,7 @@ map<uint256, set<uint256> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = FIRSTCASE_NAME + " Signed Message:\n";
+const string strMessageMagic = "Dirac Signed Message:\n";
 
 double dHashesPerSec = 0.0;
 int64 nHPSTimerStart = 0;
@@ -2030,7 +2030,7 @@ int GetAuxPowStartBlock()
 
 int GetOurChainID()
 {
-    return 0x0005;
+    return MERGED_MINING_CHAIN_ID;
 }
 
 bool CBlockHeader::CheckProofOfWork(int nHeight) const
@@ -2813,7 +2813,7 @@ bool LoadBlockIndex()
 {
     if (fTestNet)
     {
-        pchMessageStart = pchTestNetMessageStart;
+        memcpy (pchMessageStart, pchTestNetMessageStart, sizeof (pchTestNetMessageStart)) ;
         hashGenesisBlock = hashTestNetGenesisBlock;
     }
 
@@ -2869,7 +2869,7 @@ bool InitBlockIndex() {
         //// debug print
         uint256 hash = block.GetHash();
         while (hash > bnProofOfWorkLimit.getuint256()){
-            if (++genesis.nNonce==0) break;
+            if (++block.nNonce==0) break;
             hash = block.GetHash();
         }
 
@@ -4638,7 +4638,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != hashBestChain)
-            return error(FIRSTCASE_NAME + "Miner : generated block is stale");
+            return error("Dirac Miner : generated block is stale");
 
         // Remove key from key pool
         reservekey.KeepKey();
@@ -4652,7 +4652,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         // Process this block the same as if we had received it from another node
         CValidationState state;
         if (!ProcessBlock(state, NULL, pblock))
-            return error(FIRSTCASE_NAME + "Miner : ProcessBlock, block not accepted");
+            return error("Dirac Miner : ProcessBlock, block not accepted");
     }
 
     return true;
@@ -4662,7 +4662,7 @@ void static BitcoinMiner(CWallet *pwallet)
 {
     printf("%sMiner started\n", FIRSTCASE_NAME);
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread(LOWERCASE_NAME + "-miner");
+    RenameThread("dirac-miner");
 
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);

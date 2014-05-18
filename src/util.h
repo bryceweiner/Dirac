@@ -12,7 +12,7 @@
 
 #ifndef WIN32
 #include <sys/types.h>
-#include <sys/time.h>
+#include <sys/time.h>   
 #include <sys/resource.h>
 #else
 typedef int pid_t; /* define for Windows compatibility */
@@ -32,7 +32,6 @@ typedef int pid_t; /* define for Windows compatibility */
 
 #include "netbase.h" // for AddTimeData
 
-typedef long long  int64;
 typedef unsigned long long  uint64;
 
 //static const int64 COIN = 100000000;
