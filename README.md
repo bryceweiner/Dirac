@@ -29,9 +29,11 @@ The difficulty adjustment is also same as per Bitcoin
   
 __*What is Dirac?*__
 ====================
-A Revolution In Cryptocurrency Finance
+A Revolution In Cryptocurrency and Finance
 ---------------------------------------
 Dirac is intented not simply as a currency, but as a stable financial instrument capable of carrying vast amounts of wealth in a safe, secure, and in a manner more economically efficient than Bitcoin.  Free-market managed economic stability is a concept introduced by NautilusCoin and then enhanced by Dirac.  Dirac will be traded in an exclusive currency pairing against NautilusCoin (NAUT market) on [AllCrypt](http://AllCrypt.com).
+
+Dirac has a specially modified codebase which allows for a process of currency cloning that is simpler than ever before. Thousands of clones can now be created and each blockchain comes pre-built with merged mining.
 
 * ISO 4217 Trading Symbol : XDQ
 * Monetary Symbol : Ð 
@@ -43,6 +45,31 @@ Dirac is intented not simply as a currency, but as a stable financial instrument
  * Third reward reduction @ 1448001) : Ð0.5 
  * Fourth reward reduction @ 2145601 : Ð0.25 
  * Fifth reward reduction (inflation mode) @ 2846401 : Ð0.01 
+ * GPU Mining: Yes.
+ * FPGA Mining: Yes.
+ * ASIC Mining : *NO*
+
+Useful Information
+-------------------
+__Official Blake Ecosystem Mining Information and Discussion Thread__
+[https://bitcointalk.org/index.php?topic=306894.0](https://bitcointalk.org/index.php?topic=306894.0)
+
+__Official Blake Ecosystem Website__
+[http://www.blakecoin.org](http://www.blakecoin.org)
+
+__Official Blake Ecosystem Merged Mining Pool__
+US East: [http://ny2.blakecoin.com/](http://ny2.blakecoin.com/)
+US West: [http://la1.blakecoin.com/](http://la1.blakecoin.com/)
+Europe: [http://eu3.blakecoin.com](http://eu3.blakecoin.com)
+
+__Official Dirac Exchange (Blake Ecosystem Present)__
+[http://allcrypt.com](http://allcrypt.com)
+
+__What Is Merged Mining?__
+[http://bitcoin.stackexchange.com/questions/273/how-does-merged-mining-work](http://bitcoin.stackexchange.com/questions/273/how-does-merged-mining-work)
+
+__The Science of the Blake Advantage Over Bitcoin__
+[https://131002.net/blake/blake.pdf](https://131002.net/blake/blake.pdf)
 
 __License__
 
