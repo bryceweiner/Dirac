@@ -15,8 +15,8 @@ static const char* CAPITALIZED_NAME = "DIRAC";
 static const char* FIRSTCASE_NAME = "Dirac";
 static const char* ISO4217_TRADING_SYMBOL = "XDQ";
 static const char* WEBSITE = "dirac.io";
-static const char* MONETARY_SYMBOL = "Ð";
-static const char* MONETARY_SYMBOL_ASCII = "0208";
+static const char* MONETARY_SYMBOL = "Ð";
+static const char* MONETARY_SYMBOL_ASCII = "\u00D0";
 
 // Ports
 const int MAINNET_RPC_PORT = 42024;
@@ -57,6 +57,6 @@ static const int COINBASE_MATURITY = 100;
 static const int64 nGenesisBlockRewardCoin = 50 * COIN;
 
 // Target block time
-static const int64 nTargetTimespan = 7 * 24 * 60 * 60; // one week
+static const int64 nTargetTimespan = 60 * 60; // 60 minutes
 static const int64 nTargetSpacing = 60 * 3; // Block time
 static const int64 nInterval = nTargetTimespan / nTargetSpacing;
