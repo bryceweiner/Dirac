@@ -11,9 +11,9 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(B);
-    unitlist.append(mB);
-    unitlist.append(uB);
+    unitlist.append(D);
+    unitlist.append(mD);
+    unitlist.append(uD);
     return unitlist;
 }
 
@@ -21,9 +21,9 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case B:
-    case mB:
-    case uB:
+    case D:
+    case mD:
+    case uD:
         return true;
     default:
         return false;
@@ -34,9 +34,9 @@ QString BitcoinUnits::name(int unit)
 {
     switch(unit)
     {
-    case B: return QString(MONETARY_SYMBOL_ASCII);
-    case mB: return QString("m" + "\u" + MONETARY_SYMBOL_ASCII);
-    case uB: return QString::fromUtf8("μ" + MONETARY_SYMBOL_ASCII);
+    case D: return QString("\u00D0");
+    case mD: return QString("m\u00D0");
+    case uD: return QString::fromUtf8("µ\u00D0");
     default: return QString("???");
     }
 }
@@ -45,9 +45,9 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case B: return QString(FIRSTCASE_NAME);
-    case mB: return QString("Milli-" + FIRSTCASE_NAME + " (1 / 1,000)");
-    case uB: return QString("Micro-" + FIRSTCASE_NAME + " (1 / 1,000,000)");
+    case D: return QString(FIRSTCASE_NAME);
+    case mD: return QString("Milli-Dirac's (1 / 1,000)");
+    case uD: return QString("Micro-Dirac's (1 / 1,000,000)");
     default: return QString("???");
     }
 }
@@ -56,9 +56,9 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case B:  return 100000000;
-    case mB: return 100000;
-    case uB: return 100;
+    case D:  return 100000000;
+    case mD: return 100000;
+    case uD: return 100;
     default:   return 100000000;
     }
 }
@@ -67,9 +67,9 @@ int BitcoinUnits::amountDigits(int unit)
 {
     switch(unit)
     {
-    case B: return 8; // 21,000,000 (# digits, without commas)
-    case mB: return 11; // 21,000,000,000
-    case uB: return 14; // 21,000,000,000,000
+    case D: return 8; // 21,000,000 (# digits, without commas)
+    case mD: return 11; // 21,000,000,000
+    case uD: return 14; // 21,000,000,000,000
     default: return 0;
     }
 }
@@ -78,9 +78,9 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case B: return 8;
-    case mB: return 5;
-    case uB: return 2;
+    case D: return 8;
+    case mD: return 5;
+    case uD: return 2;
     default: return 0;
     }
 }
