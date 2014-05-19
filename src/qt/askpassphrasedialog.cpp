@@ -3,7 +3,7 @@
 
 #include "guiconstants.h"
 #include "walletmodel.h"
-#include "clone.h"
+//#include "clone.h"
 #include <QMessageBox>
 #include <QPushButton>
 #include <QKeyEvent>
@@ -109,9 +109,9 @@ void AskPassphraseDialog::accept()
                 {
                     QMessageBox::warning(this, tr("Wallet encrypted"),
                                          "<qt>" +
-                                         tr(FIRSTCASE_NAME + " will close now to finish the encryption process. "
+                                         tr("Dirac will close now to finish the encryption process. "
                                          "Remember that encrypting your wallet cannot fully protect "
-                                         "your " + FIRSTCASE_NAME + "'s from being stolen by malware infecting your computer.") +
+                                         "your Dirac's from being stolen by malware infecting your computer.") +
                                          "<br><br><b>" +
                                          tr("IMPORTANT: Any previous backups you have made of your wallet file "
                                          "should be replaced with the newly generated, encrypted wallet file. "
