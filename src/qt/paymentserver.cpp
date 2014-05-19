@@ -9,7 +9,7 @@
 #include "guiconstants.h"
 #include "ui_interface.h"
 #include "util.h"
-#include "clone.h"
+//#include "clone.h"
 
 #include <QByteArray>
 #include <QDataStream>
@@ -24,7 +24,7 @@
 using namespace boost;
 
 const int BITCOIN_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
-const QString BITCOIN_IPC_PREFIX(LOWERCASE_NAME + ":");
+const QString BITCOIN_IPC_PREFIX("dirac:");
 
 //
 // Create a name that is unique for:
@@ -33,7 +33,7 @@ const QString BITCOIN_IPC_PREFIX(LOWERCASE_NAME + ":");
 //
 static QString ipcServerName()
 {
-    QString name(FIRSTCASE_NAME + "Qt");
+    QString name("DiracQt");
 
     // Append a simple hash of the datadir
     // Note that GetDataDir(true) returns a different path
@@ -105,7 +105,7 @@ PaymentServer::PaymentServer(QApplication* parent) : QObject(parent), saveURIs(t
     uriServer = new QLocalServer(this);
 
     if (!uriServer->listen(name))
-        qDebug() << tr("Cannot start " + FIRSTCASE_NAME + ": click-to-pay handler");
+        qDebug() << tr("Cannot start dirac: click-to-pay handler");
     else
         connect(uriServer, SIGNAL(newConnection()), this, SLOT(handleURIConnection()));
 }
