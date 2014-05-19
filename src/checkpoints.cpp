@@ -35,7 +35,7 @@ namespace Checkpoints
     // + Contains no strange transactions
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
-        ( 0, uint256("0x000000dcb4434e2148558a0a5c71e5c06d864accef97d75ac1c031405deb3371"))
+        ( 0, uint256("0x000000e02afef4712c99d5fa44cb5f76af046953cc31433bc97f7090ce6a50d8"))
         ;
     static const CCheckpointData data = {
         &mapCheckpoints,
