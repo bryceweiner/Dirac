@@ -39,16 +39,16 @@ Dirac is intented not simply as a currency, but as a stable financial instrument
 Dirac has a specially modified codebase which allows for a process of currency cloning that is simpler than ever before. Thousands of clones can now be created and each blockchain comes pre-built with merged mining.
 
 * ISO 4217 Trading Symbol : XDQ
-* Monetary Symbol : Ã 
+* Monetary Symbol : Ð 
 * Target block time : 180 seconds 
 * Difficulty retarget : 2,016 blocks (roughly every 4 days) 
-* Maximum Coins: Ã2,272,800
-* Starting block reward : Ã8 
- * First reward reduction @ 43201 : Ã1.25 
- * Second reward reduction @ 744001 : Ã0.75 
- * Third reward reduction @ 1448001) : Ã0.5 
- * Fourth reward reduction @ 2145601 : Ã0.25 
- * Fifth reward reduction (inflation mode) @ 2846401 : Ã0.01 
+* Maximum Coins: Ð2,272,800
+* Starting block reward : Ð8 
+ * First reward reduction @ 43201 : Ð1.25 
+ * Second reward reduction @ 744001 : Ð0.75 
+ * Third reward reduction @ 1448001) : Ð0.5 
+ * Fourth reward reduction @ 2145601 : Ð0.25 
+ * Fifth reward reduction (inflation mode) @ 2846401 : Ð0.01 
 
 Useful Information
 -------------------
