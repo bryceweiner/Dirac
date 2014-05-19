@@ -52,6 +52,9 @@ Dirac has a specially modified codebase which allows for a process of currency c
 
 Useful Information
 -------------------
+* [Windows Wallet](blakecoin.org/Dirac-0.8.9.1-WIN.7z)
+* [Linux Wallet](blakecoin.org/Dirac-0.8.9.1-LIN.7z)
+
 __Official Blake Ecosystem Mining Information and Discussion Thread__
 * [https://bitcointalk.org/index.php?topic=306894.0](https://bitcointalk.org/index.php?topic=306894.0)
 
