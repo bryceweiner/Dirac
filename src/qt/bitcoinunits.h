@@ -19,9 +19,9 @@ public:
      */
     enum Unit
     {
-        B,
-        mB,
-        uB
+        D,
+        mD,
+        uD
     };
 
     //! @name Static API
