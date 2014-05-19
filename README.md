@@ -24,7 +24,7 @@ __*What is BlakeBitcoin?*__
 ---------------------
 A Clone of Bitcoin same reward structure Starting with 50 coins per block and a total of 21 million coins 
 The Block target time is 1/4 of Bitcoin's to account for extra hashing speed of Blake-256
-The difficulty retarget is same as Bitcoin at 2016 blocks and the reward halving every 210,000 blocks ~ 1 year
+The difficulty retarget at 8064 blocks and the reward halving every 210,000 blocks 
 The difficulty adjustment is also same as per Bitcoin
   
 __*What is Dirac?*__
@@ -39,16 +39,16 @@ Dirac is intented not simply as a currency, but as a stable financial instrument
 Dirac has a specially modified codebase which allows for a process of currency cloning that is simpler than ever before. Thousands of clones can now be created and each blockchain comes pre-built with merged mining.
 
 * ISO 4217 Trading Symbol : XDQ
-* Monetary Symbol : Ð 
+* Monetary Symbol : Ã 
 * Target block time : 180 seconds 
-* Difficulty retarget : 20 blocks (once an hour) 
-* Maximum Coins: Ð2,272,800
-* Starting block reward : Ð8 
- * First reward reduction @ 43201 : Ð1.25 
- * Second reward reduction @ 744001 : Ð0.75 
- * Third reward reduction @ 1448001) : Ð0.5 
- * Fourth reward reduction @ 2145601 : Ð0.25 
- * Fifth reward reduction (inflation mode) @ 2846401 : Ð0.01 
+* Difficulty retarget : 2,016 blocks (roughly every 4 days) 
+* Maximum Coins: Ã2,272,800
+* Starting block reward : Ã8 
+ * First reward reduction @ 43201 : Ã1.25 
+ * Second reward reduction @ 744001 : Ã0.75 
+ * Third reward reduction @ 1448001) : Ã0.5 
+ * Fourth reward reduction @ 2145601 : Ã0.25 
+ * Fifth reward reduction (inflation mode) @ 2846401 : Ã0.01 
 
 Useful Information
 -------------------
