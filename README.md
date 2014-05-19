@@ -55,12 +55,13 @@ Useful Information
 * [Windows Wallet](http://blakecoin.org/Dirac-0.8.9.1-WIN.7z)
 * [Linux Wallet](http://blakecoin.org/Dirac-0.8.9.1-LIN.7z)
 
-'''
+```
 addnode=146.185.135.24 
 addnode=162.243.14.130 
 addnode=188.226.213.85 
 addnode=107.170.140.27
-'''
+```
+
 __Official Blake Ecosystem Mining Information and Discussion Thread__
 * [https://bitcointalk.org/index.php?topic=306894.0](https://bitcointalk.org/index.php?topic=306894.0)
 
